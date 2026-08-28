@@ -115,17 +115,12 @@
                     </div>
                 </div>
 
-                <!-- 
-                 FORM INPUT: 
-                 - Di HP (hidden di lg:block / muncul sebagai floating di bawah) 
-                 - Di Desktop/iPad (muncul sebagai card normal di kolom kiri lewat lg:block)
-                -->
+                <!-- FORM INPUT DESKTOP -->
                 <section class="hidden lg:block ios-card p-5">
                     <h3 class="font-bold text-[#1C1C1E] text-xs mb-3 flex items-center gap-2">
                         <span class="w-6 h-6 rounded-lg bg-blue-500/10 text-[#007AFF] flex items-center justify-center text-[10px]"><i class="fa-solid fa-plus"></i></span>
                         Catat Transaksi Baru
                     </h3>
-                    <!-- Form Template Desktop -->
                     <div id="form-container-desktop"></div>
                 </section>
 
@@ -201,18 +196,23 @@
         </div>
     </div>
 
-    <!-- FORM INPUT FLOATING KHUSUS HP (Hanya muncul di layar kecil / mobile) -->
+    <!-- FORM INPUT FLOATING KHUSUS HP DENGAN TOMBOL TOGGLE (Buka/Tutup) -->
     <div class="fixed bottom-0 left-0 right-0 z-50 p-4 max-w-md mx-auto lg:hidden">
-        <section class="ios-floating-card p-4 shadow-2xl">
+        <section class="ios-floating-card p-4 shadow-2xl relative">
+            <!-- Tombol Toggle Buka/Tutup Form HP -->
+            <button onclick="toggleFormMobile()" id="btn-toggle-form" class="absolute -top-4 right-6 bg-[#007AFF] text-white w-8 h-8 rounded-full shadow-md flex items-center justify-center text-xs transition-all">
+                <i id="icon-toggle" class="fa-solid fa-chevron-up"></i>
+            </button>
+
             <h3 class="font-bold text-[#1C1C1E] text-xs mb-2.5 flex items-center gap-2">
                 <span class="w-5.5 h-5.5 rounded-lg bg-blue-500/10 text-[#007AFF] flex items-center justify-center text-[10px]"><i class="fa-solid fa-plus"></i></span>
                 Catat Transaksi Baru
             </h3>
-            <div id="form-container-mobile"></div>
+            <div id="form-container-mobile" class="transition-all duration-300"></div>
         </section>
     </div>
 
-    <!-- Template Form HTML (Digunakan bersamaan oleh HP & Desktop secara dinamis) -->
+    <!-- Template Form HTML -->
     <template id="template-form">
         <form onsubmit="submitTransaksi(event)" class="space-y-3">
             <div class="grid grid-cols-2 gap-1 bg-black/5 backdrop-blur-md p-1 rounded-xl">
@@ -244,11 +244,26 @@
         let transaksiList = JSON.parse(localStorage.getItem('transaksi_dompetku_v23')) || [];
         let myChart = null;
 
+        // Fungsi Toggle Buka/Tutup Form di Mobile
+        let isFormOpen = true;
+        function toggleFormMobile() {
+            isFormOpen = !isFormOpen;
+            const container = document.getElementById('form-container-mobile');
+            const icon = document.getElementById('icon-toggle');
+            
+            if (isFormOpen) {
+                container.style.display = 'block';
+                icon.className = 'fa-solid fa-chevron-up';
+            } else {
+                container.style.display = 'none';
+                icon.className = 'fa-solid fa-chevron-down';
+            }
+        }
+
         // Inisialisasi Form ke dalam kontainer Desktop dan Mobile
         function initForm() {
             const template = document.getElementById('template-form').content;
             document.getElementById('form-container-desktop').appendChild(template.cloneNode(true));
-            // Karena template di-clone, kita ambil elemen di mobile secara terpisah
             const mobileTemplate = document.getElementById('template-form').content.cloneNode(true);
             document.getElementById('form-container-mobile').appendChild(mobileTemplate);
             
@@ -259,7 +274,6 @@
         const selectBulan = document.getElementById('pilih-bulan');
 
         function setupNominalListener() {
-            // Pasang event listener ke semua input nominal (desktop & mobile)
             document.querySelectorAll('#nominal').forEach(inputNominal => {
                 inputNominal.addEventListener('input', function (e) {
                     let value = this.value.replace(/[^,\d]/g, '').toString();
@@ -275,7 +289,6 @@
 
                     rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
                     
-                    // Sinkronkan nilai ke input nominal lainnya jika ada
                     document.querySelectorAll('#nominal').forEach(inp => inp.value = rupiah);
                 });
             });
@@ -355,7 +368,6 @@
         function setTipe(tipe) {
             tipeAktif = tipe;
             
-            // Perbarui tampilan tombol aktif di kedua form (mobile & desktop)
             document.querySelectorAll('button[onclick^="setTipe"]').forEach(btn => {
                 const isMasuk = btn.getAttribute('onclick').includes('pemasukan');
                 if ((tipe === 'pemasukan' && isMasuk) || (tipe === 'pengeluaran' && !isMasuk)) {
@@ -371,7 +383,6 @@
         function submitTransaksi(e) {
             e.preventDefault();
             
-            // Ambil data dari form aktif
             const keterangan = document.getElementById('keterangan').value;
             const rawNominal = document.getElementById('nominal').value.replace(/\./g, '');
             const nominal = parseFloat(rawNominal);
@@ -395,7 +406,6 @@
             selectBulan.value = bulanTahun;
             simpanDanRender();
             
-            // Reset semua input form
             document.querySelectorAll('#keterangan').forEach(i => i.value = '');
             document.querySelectorAll('#nominal').forEach(i => i.value = '');
             setTipe('pengeluaran');
