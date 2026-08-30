@@ -105,8 +105,8 @@
                     <i class="fa-solid fa-wallet"></i>
                 </div>
                 <div>
-                    <h1 class="text-base font-bold tracking-tight">DOMPET KITA</h1>
-                    <p class="text-xs text-[var(--text-muted)]">Allahumma sholli 'ala sayyidina Muhammad sukses dan kaya</p>
+                    <h1 class="text-base font-bold tracking-tight">DOMPETKU</h1>
+                    <p class="text-xs text-[var(--text-muted)]">Keuangan Bersama</p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
@@ -160,7 +160,7 @@
                 <section class="ios-card p-5 space-y-3.5">
                     <div class="flex justify-between items-center">
                         <h3 class="font-bold text-xs flex items-center gap-2">
-                            <i class="fa-solid fa-chart-pie text-[#5856D6]"></i> Budgeting
+                            <i class="fa-solid fa-chart-pie text-[#5856D6]"></i> Budgeting 50/30/20
                         </h3>
                     </div>
                     <div class="space-y-1">
@@ -200,7 +200,7 @@
                     </div>
                 </section>
 
-                <!-- Riwayat Terpisah (Tab / Pilihan Riwayat) -->
+                <!-- Riwayat Terpisah -->
                 <section class="ios-card p-5">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="font-bold text-xs flex items-center gap-2">
@@ -220,7 +220,7 @@
                         <p class="text-center text-[var(--text-muted)] text-xs py-8">Memuat data...</p>
                     </div>
 
-                    <!-- Daftar Riwayat Pemasukan (Hidden by default) -->
+                    <!-- Daftar Riwayat Pemasukan -->
                     <div id="list-pemasukan" class="space-y-2 max-h-[400px] overflow-y-auto pr-1 hidden">
                         <p class="text-center text-[var(--text-muted)] text-xs py-8">Memuat data...</p>
                     </div>
@@ -230,7 +230,7 @@
         </div>
     </div>
 
-    <!-- Template Form -->
+    <!-- Template Form dengan Pilihan Bulan -->
     <template id="template-form">
         <form onsubmit="submitTransaksi(event)" class="flex flex-col gap-2.5">
             <div class="grid grid-cols-2 gap-1 ios-inner-box p-1 rounded-xl">
@@ -249,7 +249,24 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" id="btn-simpan" class="w-full bg-[#007AFF] text-white font-bold py-2.5 rounded-xl shadow-md shadow-blue-500/20 hover:opacity-90 transition text-xs mt-1 cursor-pointer">SIMPAN</button>
+            <div>
+                <label class="block text-[10px] font-semibold text-[var(--text-muted)] mb-1">Pilih Bulan Transaksi:</label>
+                <select id="pilih-bulan" class="w-full px-3.5 py-2 ios-input text-xs font-medium cursor-pointer">
+                    <option value="Januari">Januari</option>
+                    <option value="Februari">Februari</option>
+                    <option value="Maret">Maret</option>
+                    <option value="April">April</option>
+                    <option value="Mei">Mei</option>
+                    <option value="Juni">Juni</option>
+                    <option value="Juli">Juli</option>
+                    <option value="Agustus">Agustus</option>
+                    <option value="September">September</option>
+                    <option value="Oktober">Oktober</option>
+                    <option value="November">November</option>
+                    <option value="Desember">Desember</option>
+                </select>
+            </div>
+            <button type="submit" id="btn-simpan" class="w-full bg-[#007AFF] text-white font-bold py-2.5 rounded-xl shadow-md shadow-blue-500/20 hover:opacity-90 transition text-xs mt-1 cursor-pointer">Simpan ke Cloud</button>
         </form>
     </template>
 
@@ -302,6 +319,12 @@
             document.getElementById('form-container').appendChild(template.cloneNode(true));
             setupNominalListener();
             updatePilihanKategori();
+
+            // Set default pilihan bulan ke bulan saat ini secara otomatis
+            const namaBulanList = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            const bulanIni = namaBulanList[new Date().getMonth()];
+            const selectBulan = document.getElementById('pilih-bulan');
+            if (selectBulan) selectBulan.value = bulanIni;
         }
 
         function setupNominalListener() {
@@ -407,7 +430,7 @@
                 transaksiList = data || [];
                 renderAplikasi();
                 
-                statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online`;
+                statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online (Sinkron)`;
                 statusEl.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 flex items-center gap-1.5";
             } catch (err) {
                 console.error("Gagal memuat:", err.message);
@@ -426,6 +449,8 @@
             const keterangan = document.getElementById('keterangan').value;
             const nominal = parseFloat(document.getElementById('nominal').value.replace(/\./g, ''));
             const kategori = document.getElementById('kategori').value;
+            const bulanPilihan = document.getElementById('pilih-bulan').value;
+            const tahunAktif = new Date().getFullYear();
 
             const transaksiBaru = {
                 id: Date.now(),
@@ -433,7 +458,7 @@
                 keterangan,
                 nominal,
                 kategori,
-                tanggal: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+                tanggal: `${bulanPilihan} ${tahunAktif}`
             };
 
             try {
@@ -575,7 +600,7 @@
                                 </div>
                                 <div>
                                     <p class="font-bold text-xs">${t.keterangan}</p>
-                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • ${t.tanggal}</p>
+                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • <span class="text-[#007AFF] font-bold">${t.tanggal}</span></p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
@@ -596,7 +621,7 @@
                                 </div>
                                 <div>
                                     <p class="font-bold text-xs">${t.keterangan}</p>
-                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • ${t.tanggal}</p>
+                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • <span class="text-[#007AFF] font-bold">${t.tanggal}</span></p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
