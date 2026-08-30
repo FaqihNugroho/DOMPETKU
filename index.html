@@ -51,32 +51,6 @@
             border-radius: 2rem;
         }
 
-        /* Floating Card HP dengan Efek Liquid Glass */
-        .ios-floating-liquid {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            border-top: 1px solid rgba(255, 255, 255, 1);
-            box-shadow: 0 -15px 35px 0 rgba(0, 0, 0, 0.1),
-                        inset 0 1px 0 0 rgba(255, 255, 255, 1);
-            border-top-left-radius: 2.5rem;
-            border-top-right-radius: 2.5rem;
-        }
-
-        /* Transisi Form Mobile yang Smooth */
-        #form-container-mobile {
-            max-height: 500px;
-            opacity: 1;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease-in-out, margin-top 0.3s ease-in-out;
-        }
-        #form-container-mobile.collapsed {
-            max-height: 0;
-            opacity: 0;
-            margin-top: 0 !important;
-        }
-
         /* Input & Elemen Interaktif */
         .ios-input {
             background: rgba(255, 255, 255, 0.6);
@@ -101,7 +75,7 @@
         }
     </style>
 </head>
-<body class="pb-36 lg:pb-12">
+<body class="pb-12">
 
     <!-- Wrapper Utama Responsive -->
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10">
@@ -149,13 +123,13 @@
                     </div>
                 </div>
 
-                <!-- FORM INPUT DESKTOP -->
-                <section class="hidden lg:block ios-liquid-card p-6">
+                <!-- FORM INPUT (Tampil Normal di Semua Ukuran Layar di Bawah Saldo) -->
+                <section class="ios-liquid-card p-6">
                     <h3 class="font-bold text-[#1C1C1E] text-xs mb-4 flex items-center gap-2">
                         <span class="w-6 h-6 rounded-xl bg-blue-500/10 text-[#007AFF] flex items-center justify-center text-[10px] border border-blue-500/20"><i class="fa-solid fa-plus"></i></span>
                         Catat Transaksi Baru
                     </h3>
-                    <div id="form-container-desktop"></div>
+                    <div id="form-container"></div>
                 </section>
 
                 <!-- Fitur Anggaran 50/30/20 -->
@@ -230,26 +204,7 @@
         </div>
     </div>
 
-    <!-- FORM INPUT FLOATING KHUSUS HP -->
-    <div class="fixed bottom-0 inset-x-0 z-50 px-3 pb-3 max-w-lg mx-auto lg:hidden">
-        <section class="ios-floating-liquid p-4 sm:p-5 shadow-2xl relative">
-            <!-- Header Card diklik untuk Toggle Naik / Turun -->
-            <div onclick="toggleFormMobile()" class="flex justify-between items-center cursor-pointer select-none">
-                <h3 class="font-bold text-[#1C1C1E] text-xs flex items-center gap-2 m-0">
-                    <span class="w-5.5 h-5.5 rounded-xl bg-blue-500/10 text-[#007AFF] flex items-center justify-center text-[10px] border border-blue-500/20"><i class="fa-solid fa-plus"></i></span>
-                    Catat Transaksi Baru
-                </h3>
-                <div id="icon-toggle-container" class="text-[#007AFF] text-xs transition-transform duration-300">
-                    <i id="icon-toggle" class="fa-solid fa-chevron-up"></i>
-                </div>
-            </div>
-
-            <!-- Konten Form -->
-            <div id="form-container-mobile" class="mt-3.5"></div>
-        </section>
-    </div>
-
-    <!-- Template Form HTML (Responsif Flex Vertikal untuk Menjamin Keterangan Tampil) -->
+    <!-- Template Form HTML -->
     <template id="template-form">
         <form onsubmit="submitTransaksi(event)" class="flex flex-col gap-2.5">
             <div class="grid grid-cols-2 gap-1.5 bg-black/5 backdrop-blur-xl p-1.5 rounded-2xl border border-white/60">
@@ -281,26 +236,9 @@
         let transaksiList = JSON.parse(localStorage.getItem('transaksi_dompetku_v24')) || [];
         let myChart = null;
 
-        let isFormOpen = true;
-        function toggleFormMobile() {
-            isFormOpen = !isFormOpen;
-            const container = document.getElementById('form-container-mobile');
-            const iconContainer = document.getElementById('icon-toggle-container');
-            
-            if (isFormOpen) {
-                container.classList.remove('collapsed');
-                iconContainer.style.transform = 'rotate(0deg)';
-            } else {
-                container.classList.add('collapsed');
-                iconContainer.style.transform = 'rotate(180deg)';
-            }
-        }
-
         function initForm() {
             const template = document.getElementById('template-form').content;
-            document.getElementById('form-container-desktop').appendChild(template.cloneNode(true));
-            const mobileTemplate = document.getElementById('template-form').content.cloneNode(true);
-            document.getElementById('form-container-mobile').appendChild(mobileTemplate);
+            document.getElementById('form-container').appendChild(template.cloneNode(true));
             
             setupNominalListener();
             updatePilihanKategori();
