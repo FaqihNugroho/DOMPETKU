@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js untuk Grafik -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- Google Font Plus Jakarta Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- TEMA WARNA LIGHT MODE --- */
         :root {
             --bg-body: #F2F2F7;
             --text-main: #000000;
@@ -26,7 +27,6 @@
             --inner-box-border: rgba(60, 60, 67, 0.1);
         }
 
-        /* --- TEMA WARNA DARK MODE MANUAL (Background Hitam Pekat, Kartu Grey Tegas) --- */
         html.dark {
             --bg-body: #000000;
             --text-main: #F8FAFC;
@@ -49,7 +49,6 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Efek Kartu Khas iOS dengan Batas Tegas */
         .ios-card {
             background-color: var(--card-bg) !important;
             backdrop-filter: blur(25px);
@@ -60,7 +59,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Kartu Saldo Utama (Gaya Apple Card) */
         .ios-hero-card {
             background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
             border-radius: 1.5rem;
@@ -68,7 +66,6 @@
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
-        /* Input Form ala iOS */
         .ios-input {
             background-color: var(--input-bg) !important;
             border: 1px solid var(--input-border) !important;
@@ -82,7 +79,6 @@
             outline: none;
         }
 
-        /* Kotak Dalam / List Item */
         .ios-inner-box {
             background-color: var(--inner-box-bg);
             border: 1px solid var(--inner-box-border);
@@ -110,13 +106,19 @@
                 </div>
                 <div>
                     <h1 class="text-base font-bold tracking-tight">DOMPETKU</h1>
-                    <p class="text-xs text-[var(--text-muted)]">Keuangan Pribadi</p>
+                    <p class="text-xs text-[var(--text-muted)]">Keuangan Bersama</p>
                 </div>
             </div>
-            <!-- Tombol Toggle Tema Manual -->
-            <button onclick="toggleDarkMode()" id="theme-toggle" class="w-10 h-10 rounded-2xl ios-card flex items-center justify-center text-sm text-[var(--text-main)] hover:opacity-80 transition cursor-pointer" title="Ubah Tema">
-                <i id="theme-icon" class="fa-solid fa-moon"></i>
-            </button>
+            <div class="flex items-center gap-2">
+                <!-- Status Koneksi Realtime -->
+                <span id="sync-status" class="text-[10px] px-2.5 py-1 rounded-full font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Menghubungkan...
+                </span>
+                <!-- Tombol Toggle Tema -->
+                <button onclick="toggleDarkMode()" id="theme-toggle" class="w-10 h-10 rounded-2xl ios-card flex items-center justify-center text-sm text-[var(--text-main)] hover:opacity-80 transition cursor-pointer" title="Ubah Tema">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+            </div>
         </header>
 
         <!-- Layout Utama -->
@@ -129,7 +131,7 @@
                     <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
                     <div class="mb-5 relative z-10">
                         <div class="flex justify-between items-center">
-                            <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-100">Total Saldo</p>
+                            <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-100">Total Saldo Bersama</p>
                             <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-full font-bold">IDR</span>
                         </div>
                         <h2 id="total-saldo" class="text-3xl font-extrabold mt-1 tracking-tight">Rp 0</h2>
@@ -202,12 +204,12 @@
                 <section class="ios-card p-5">
                     <div class="flex justify-between items-center mb-3">
                         <h3 class="font-bold text-xs flex items-center gap-2">
-                            <i class="fa-solid fa-clock-rotate-left text-[#FF9500]"></i> Riwayat Transaksi
+                            <i class="fa-solid fa-clock-rotate-left text-[#FF9500]"></i> Riwayat Transaksi Online
                         </h3>
-                        <button onclick="resetSemuaData()" class="text-[11px] text-[#FF3B30] font-semibold hover:opacity-80 transition">Reset</button>
+                        <button onclick="resetSemuaData()" class="text-[11px] text-[#FF3B30] font-semibold hover:opacity-80 transition cursor-pointer">Reset Semua</button>
                     </div>
                     <div id="list-transaksi" class="space-y-2 max-h-[460px] overflow-y-auto pr-1">
-                        <p id="empty-state" class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada transaksi.</p>
+                        <p id="empty-state" class="text-center text-[var(--text-muted)] text-xs py-8">Memuat data dari cloud...</p>
                     </div>
                 </section>
             </div>
@@ -219,8 +221,8 @@
     <template id="template-form">
         <form onsubmit="submitTransaksi(event)" class="flex flex-col gap-2.5">
             <div class="grid grid-cols-2 gap-1 ios-inner-box p-1 rounded-xl">
-                <button type="button" id="btn-pemasukan" onclick="setTipe('pemasukan')" class="py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition">Masuk</button>
-                <button type="button" id="btn-pengeluaran" onclick="setTipe('pengeluaran')" class="py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition">Keluar</button>
+                <button type="button" id="btn-pemasukan" onclick="setTipe('pemasukan')" class="py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition cursor-pointer">Masuk</button>
+                <button type="button" id="btn-pengeluaran" onclick="setTipe('pengeluaran')" class="py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer">Keluar</button>
             </div>
             <div>
                 <input type="text" id="keterangan" placeholder="Keterangan (Cth: Belanja Bulanan)" required class="w-full px-3.5 py-2 ios-input text-xs font-medium">
@@ -230,17 +232,26 @@
                     <input type="text" id="nominal" inputmode="numeric" placeholder="Nominal (Rp)" required class="w-full px-3.5 py-2 ios-input text-xs font-medium">
                 </div>
                 <div>
-                    <select id="kategori" class="w-full px-3.5 py-2 ios-input text-xs font-medium">
+                    <select id="kategori" class="w-full px-3.5 py-2 ios-input text-xs font-medium cursor-pointer">
                     </select>
                 </div>
             </div>
-            <button type="submit" class="w-full bg-[#007AFF] text-white font-bold py-2.5 rounded-xl shadow-md shadow-blue-500/20 hover:opacity-90 transition text-xs mt-1">Simpan</button>
+            <button type="submit" id="btn-simpan" class="w-full bg-[#007AFF] text-white font-bold py-2.5 rounded-xl shadow-md shadow-blue-500/20 hover:opacity-90 transition text-xs mt-1 cursor-pointer">Simpan ke Cloud</button>
         </form>
     </template>
 
-    <!-- Skrip Logika -->
+    <!-- Skrip Supabase & Logika Aplikasi -->
     <script>
-        // Logika Toggle Tema Manual
+        // ==========================================
+        // KONFIGURASI SUPABASE (MASUKKAN KUNCI ANDA DI SINI)
+        // ==========================================
+        const SUPABASE_URL = 'https://npafjuaecwexkfvutlwj.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_foViRxthdk85P9UVhk4cmA_XmUGyToR';
+
+        const { createClient } = supabase;
+        const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Toggle Tema Manual
         function initTheme() {
             const savedTheme = localStorage.getItem('dompetku_theme');
             const iconEl = document.getElementById('theme-icon');
@@ -265,11 +276,11 @@
                 localStorage.setItem('dompetku_theme', 'dark');
                 iconEl.className = "fa-solid fa-sun";
             }
-            updateGrafik();
+            if (myChart) updateGrafik();
         }
 
         let tipeAktif = 'pengeluaran';
-        let transaksiList = JSON.parse(localStorage.getItem('transaksi_dompetku_ios_v5')) || [];
+        let transaksiList = [];
         let myChart = null;
 
         function initForm() {
@@ -339,17 +350,45 @@
             const btnKeluar = document.getElementById('btn-pengeluaran');
 
             if (tipe === 'pemasukan') {
-                btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold bg-[#34C759] text-white shadow-sm transition";
-                btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent";
+                btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold bg-[#34C759] text-white shadow-sm transition cursor-pointer";
+                btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
             } else {
-                btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition";
-                btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent";
+                btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer";
+                btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
             }
             updatePilihanKategori();
         }
 
-        function submitTransaksi(e) {
+        // --- AMBIL DATA DARI SUPABASE ---
+        async function ambilDataCloud() {
+            const statusEl = document.getElementById('sync-status');
+            try {
+                const { data, error } = await _supabase
+                    .from('transaksi')
+                    .select('*')
+                    .order('id', { ascending: false });
+
+                if (error) throw error;
+
+                transaksiList = data || [];
+                renderAplikasi();
+                
+                statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online (Sinkron)`;
+                statusEl.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 flex items-center gap-1.5";
+            } catch (err) {
+                console.error("Gagal memuat:", err.message);
+                statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Error Koneksi`;
+                statusEl.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-rose-500/10 text-rose-500 border border-rose-500/20 flex items-center gap-1.5";
+            }
+        }
+
+        // --- SIMPAN TRANSAKSI KE SUPABASE ---
+        async function submitTransaksi(e) {
             e.preventDefault();
+            const btnSimpan = document.getElementById('btn-simpan');
+            btnSimpan.disabled = true;
+            btnSimpan.innerText = "Menyimpan ke Cloud...";
+
             const keterangan = document.getElementById('keterangan').value;
             const nominal = parseFloat(document.getElementById('nominal').value.replace(/\./g, ''));
             const kategori = document.getElementById('kategori').value;
@@ -363,22 +402,41 @@
                 tanggal: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
             };
 
-            transaksiList.unshift(transaksiBaru);
-            simpanDanRender();
-            document.querySelectorAll('#keterangan').forEach(i => i.value = '');
-            document.querySelectorAll('#nominal').forEach(i => i.value = '');
-            setTipe('pengeluaran');
+            try {
+                const { error } = await _supabase.from('transaksi').insert([transaksiBaru]);
+                if (error) throw error;
+
+                document.querySelectorAll('#keterangan').forEach(i => i.value = '');
+                document.querySelectorAll('#nominal').forEach(i => i.value = '');
+                setTipe('pengeluaran');
+            } catch (err) {
+                alert('Gagal menyimpan transaksi: ' + err.message);
+            } finally {
+                btnSimpan.disabled = false;
+                btnSimpan.innerText = "Simpan ke Cloud";
+            }
         }
 
-        function hapusTransaksi(id) {
-            transaksiList = transaksiList.filter(t => t.id !== id);
-            simpanDanRender();
+        // --- HAPUS TRANSAKSI DARI SUPABASE ---
+        async function hapusTransaksi(id) {
+            if (!confirm("Hapus transaksi ini dari dompet bersama?")) return;
+            try {
+                const { error } = await _supabase.from('transaksi').delete().eq('id', id);
+                if (error) throw error;
+            } catch (err) {
+                alert('Gagal menghapus: ' + err.message);
+            }
         }
 
-        function resetSemuaData() {
-            if (confirm("Hapus seluruh riwayat transaksi?")) {
-                transaksiList = [];
-                simpanDanRender();
+        // --- RESET SEMUA DATA DI SUPABASE ---
+        async function resetSemuaData() {
+            if (confirm("PERINGATAN: Menghapus SELURUH riwayat transaksi bersama?")) {
+                try {
+                    const { error } = await _supabase.from('transaksi').delete().neq('id', 0);
+                    if (error) throw error;
+                } catch (err) {
+                    alert('Gagal mereset: ' + err.message);
+                }
             }
         }
 
@@ -454,14 +512,13 @@
             document.getElementById('info-savings').innerText = formatRupiah(idealSavings);
         }
 
-        function simpanDanRender() {
-            localStorage.setItem('transaksi_dompetku_ios_v5', JSON.stringify(transaksiList));
+        function renderAplikasi() {
             let totalPemasukan = 0, totalPengeluaran = 0;
             const listEl = document.getElementById('list-transaksi');
             listEl.innerHTML = '';
 
             if (transaksiList.length === 0) {
-                listEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada transaksi.</p>`;
+                listEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada transaksi online.</p>`;
             } else {
                 transaksiList.forEach(t => {
                     if (t.tipe === 'pemasukan') totalPemasukan += t.nominal;
@@ -483,7 +540,7 @@
                             <span class="font-bold text-xs ${t.tipe === 'pemasukan' ? 'text-[#34C759]' : 'text-[var(--text-main)]'}">
                                 ${t.tipe === 'pemasukan' ? '+' : '-'} ${formatRupiah(t.nominal)}
                             </span>
-                            <button onclick="hapusTransaksi(${t.id})" class="text-[var(--text-muted)] hover:text-[#FF3B30] text-xs"><i class="fa-solid fa-xmark"></i></button>
+                            <button onclick="hapusTransaksi(${t.id})" class="text-[var(--text-muted)] hover:text-[#FF3B30] text-xs cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                     `;
                     listEl.appendChild(itemEl);
@@ -498,11 +555,22 @@
             updateBudgeting503020(totalPemasukan);
         }
 
-        // Jalankan saat pertama kali dimuat
+        // --- REAL-TIME LISTENER (SUPABASE) ---
+        function setupRealtimeSync() {
+            _supabase
+                .channel('public:transaksi')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'transaksi' }, payload => {
+                    ambilDataCloud(); // Otomatis refresh data di HP Anda & Istri saat ada perubahan
+                })
+                .subscribe();
+        }
+
+        // Inisialisasi Awal
         initTheme();
         initForm();
         setTipe('pengeluaran');
-        simpanDanRender();
+        ambilDataCloud();
+        setupRealtimeSync();
     </script>
 </body>
 </html>
