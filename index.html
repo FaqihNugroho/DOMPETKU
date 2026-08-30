@@ -13,31 +13,31 @@
     <!-- Google Font Plus Jakarta Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- TEMA WARNA OTENTIK KHAS iOS (LIGHT & DARK MODE) --- */
+        /* --- TEMA WARNA OTENTIK iOS DENGAN KONTRAS MAKSIMAL --- */
         :root {
-            --bg-body: #F2F2F7; /* Warna latar belakang sistem iOS Light */
+            --bg-body: #F2F2F7;
             --text-main: #000000;
-            --text-muted: #8E8E93;
-            --card-bg: rgba(255, 255, 255, 0.8);
-            --card-border: rgba(209, 209, 214, 0.6);
+            --text-muted: #6C6C70;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: rgba(60, 60, 67, 0.18);
             --input-bg: rgba(118, 118, 128, 0.08);
-            --input-border: rgba(0, 0, 0, 0.04);
+            --input-border: rgba(60, 60, 67, 0.15);
             --inner-box-bg: rgba(118, 118, 128, 0.05);
-            --inner-box-border: rgba(0, 0, 0, 0.03);
+            --inner-box-border: rgba(60, 60, 67, 0.1);
         }
 
-        /* Dark Mode Asli Apple / iOS (OLED True Black & Dark Gray Material) */
+        /* Dark Mode dengan Background Abu Gelap Elegan (Form Jelas & Kontras) */
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-body: #000000; /* True Black ala OLED iPhone */
-                --text-main: #FFFFFF;
+                --bg-body: #121214; /* Diubah dari hitam pekat ke abu gelap agar kontras form terlihat jelas */
+                --text-main: #F4F4F6;
                 --text-muted: #98989F;
-                --card-bg: rgba(28, 28, 30, 0.75); /* iOS Dark Grouped Background Material */
-                --card-border: rgba(84, 84, 88, 0.65);
-                --input-bg: rgba(118, 118, 128, 0.24);
-                --input-border: rgba(255, 255, 255, 0.06);
-                --inner-box-bg: rgba(255, 255, 255, 0.05);
-                --inner-box-border: rgba(255, 255, 255, 0.06);
+                --card-bg: #1C1C1E; /* Solid/Semi-transparan lembut agar kontras dengan latar belakang */
+                --card-border: rgba(255, 255, 255, 0.15); /* Garis tepi lebih jelas */
+                --input-bg: #2C2C2E; /* Input form kontras dengan card */
+                --input-border: rgba(255, 255, 255, 0.12);
+                --inner-box-bg: #252528;
+                --inner-box-border: rgba(255, 255, 255, 0.08);
             }
         }
 
@@ -50,53 +50,50 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Efek Kaca Transparan Khas iOS (UIKit Blur Effect) */
+        /* Efek Kartu Khas iOS dengan Batas Tegas */
         .ios-card {
             background-color: var(--card-bg) !important;
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border: 0.5px solid var(--card-border) !important;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--card-border) !important;
             border-radius: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             transition: all 0.3s ease;
         }
 
-        /* Kartu Saldo Utama (Gaya Apple Card / Apple Pay) */
+        /* Kartu Saldo Utama (Gaya Apple Card) */
         .ios-hero-card {
             background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-radius: 1.5rem;
-            box-shadow: 0 12px 35px rgba(0, 122, 255, 0.3);
-            border: 0.5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 30px rgba(0, 122, 255, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
-        /* Input Form ala iOS Settings / Form Field */
+        /* Input Form ala iOS */
         .ios-input {
             background-color: var(--input-bg) !important;
-            border: 0.5px solid var(--input-border) !important;
+            border: 1px solid var(--input-border) !important;
             color: var(--text-main) !important;
             border-radius: 0.75rem;
             transition: all 0.2s ease;
         }
         .ios-input:focus {
             border-color: #007AFF !important;
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.25);
             outline: none;
         }
 
         /* Kotak Dalam / List Item */
         .ios-inner-box {
             background-color: var(--inner-box-bg);
-            border: 0.5px solid var(--inner-box-border);
+            border: 1px solid var(--inner-box-border);
         }
 
-        /* Hilangkan Scrollbar Bawaan tapi tetap bisa di-scroll */
         ::-webkit-scrollbar {
             width: 4px;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(142, 142, 147, 0.3);
+            background: rgba(142, 142, 147, 0.4);
             border-radius: 4px;
         }
     </style>
@@ -135,11 +132,11 @@
                         <h2 id="total-saldo" class="text-3xl font-extrabold mt-1 tracking-tight">Rp 0</h2>
                     </div>
                     <div class="grid grid-cols-2 gap-2 pt-3 border-t border-white/20 relative z-10">
-                        <div class="bg-black/10 backdrop-blur-md p-2.5 rounded-xl">
+                        <div class="bg-black/15 backdrop-blur-md p-2.5 rounded-xl">
                             <span class="text-[10px] text-emerald-300 font-bold uppercase flex items-center gap-1"><i class="fa-solid fa-arrow-down"></i> Masuk</span>
                             <p id="total-pemasukan" class="text-xs font-bold mt-1">Rp 0</p>
                         </div>
-                        <div class="bg-black/10 backdrop-blur-md p-2.5 rounded-xl">
+                        <div class="bg-black/15 backdrop-blur-md p-2.5 rounded-xl">
                             <span class="text-[10px] text-rose-300 font-bold uppercase flex items-center gap-1"><i class="fa-solid fa-arrow-up"></i> Keluar</span>
                             <p id="total-pengeluaran" class="text-xs font-bold mt-1">Rp 0</p>
                         </div>
@@ -179,7 +176,7 @@
                             <div id="bar-wants" class="bg-[#5856D6] h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                         </div>
                     </div>
-                    <div class="pt-2 border-t border-black/5 dark:border-white/5 flex justify-between items-center text-[11px] font-semibold">
+                    <div class="pt-2 border-t border-[var(--card-border)] flex justify-between items-center text-[11px] font-semibold">
                         <span class="text-[var(--text-muted)]">20% Tabungan (Savings)</span>
                         <span id="info-savings" class="text-[#34C759] font-bold">Rp 0</span>
                     </div>
@@ -241,7 +238,7 @@
     <!-- Skrip Logika -->
     <script>
         let tipeAktif = 'pengeluaran';
-        let transaksiList = JSON.parse(localStorage.getItem('transaksi_dompetku_ios')) || [];
+        let transaksiList = JSON.parse(localStorage.getItem('transaksi_dompetku_ios_v2')) || [];
         let myChart = null;
 
         function initForm() {
@@ -427,7 +424,7 @@
         }
 
         function simpanDanRender() {
-            localStorage.setItem('transaksi_dompetku_ios', JSON.stringify(transaksiList));
+            localStorage.setItem('transaksi_dompetku_ios_v2', JSON.stringify(transaksiList));
             let totalPemasukan = 0, totalPengeluaran = 0;
             const listEl = document.getElementById('list-transaksi');
             listEl.innerHTML = '';
