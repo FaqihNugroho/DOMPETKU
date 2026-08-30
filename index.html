@@ -13,7 +13,7 @@
     <!-- Google Font Plus Jakarta Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- TEMA WARNA: BACKGROUND HITAM PEKAT + KARTU GREY TEGAS --- */
+        /* --- TEMA WARNA LIGHT MODE --- */
         :root {
             --bg-body: #F2F2F7;
             --text-main: #000000;
@@ -26,19 +26,17 @@
             --inner-box-border: rgba(60, 60, 67, 0.1);
         }
 
-        /* Dark Mode: Latar Belakang Hitam Pekat (#000000), Kartu & Form Grey Tegas */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-body: #000000; /* Latar belakang halaman hitam pekat sesuai permintaan */
-                --text-main: #F8FAFC;
-                --text-muted: #A1A1AA;
-                --card-bg: #1E1E22; /* Kartu abu-abu tegas agar kontras dengan background hitam */
-                --card-border: rgba(255, 255, 255, 0.18); /* Garis tepi kartu jelas */
-                --input-bg: #2A2A2E; /* Input form abu-abu solid */
-                --input-border: rgba(255, 255, 255, 0.15);
-                --inner-box-bg: #252529;
-                --inner-box-border: rgba(255, 255, 255, 0.1);
-            }
+        /* --- TEMA WARNA DARK MODE MANUAL (Background Hitam Pekat, Kartu Grey Tegas) --- */
+        html.dark {
+            --bg-body: #000000;
+            --text-main: #F8FAFC;
+            --text-muted: #A1A1AA;
+            --card-bg: #1E1E22;
+            --card-border: rgba(255, 255, 255, 0.18);
+            --input-bg: #2A2A2E;
+            --input-border: rgba(255, 255, 255, 0.15);
+            --inner-box-bg: #252529;
+            --inner-box-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
@@ -48,6 +46,7 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         /* Efek Kartu Khas iOS dengan Batas Tegas */
@@ -57,7 +56,7 @@
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--card-border) !important;
             border-radius: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
             transition: all 0.3s ease;
         }
 
@@ -114,6 +113,10 @@
                     <p class="text-xs text-[var(--text-muted)]">Keuangan Pribadi</p>
                 </div>
             </div>
+            <!-- Tombol Toggle Tema Manual -->
+            <button onclick="toggleDarkMode()" id="theme-toggle" class="w-10 h-10 rounded-2xl ios-card flex items-center justify-center text-sm text-[var(--text-main)] hover:opacity-80 transition cursor-pointer" title="Ubah Tema">
+                <i id="theme-icon" class="fa-solid fa-moon"></i>
+            </button>
         </header>
 
         <!-- Layout Utama -->
@@ -237,8 +240,36 @@
 
     <!-- Skrip Logika -->
     <script>
+        // Logika Toggle Tema Manual
+        function initTheme() {
+            const savedTheme = localStorage.getItem('dompetku_theme');
+            const iconEl = document.getElementById('theme-icon');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                iconEl.className = "fa-solid fa-sun";
+            } else {
+                document.documentElement.classList.remove('dark');
+                iconEl.className = "fa-solid fa-moon";
+            }
+        }
+
+        function toggleDarkMode() {
+            const htmlEl = document.documentElement;
+            const iconEl = document.getElementById('theme-icon');
+            if (htmlEl.classList.contains('dark')) {
+                htmlEl.classList.remove('dark');
+                localStorage.setItem('dompetku_theme', 'light');
+                iconEl.className = "fa-solid fa-moon";
+            } else {
+                htmlEl.classList.add('dark');
+                localStorage.setItem('dompetku_theme', 'dark');
+                iconEl.className = "fa-solid fa-sun";
+            }
+            updateGrafik();
+        }
+
         let tipeAktif = 'pengeluaran';
-        let transaksiList = JSON.parse(localStorage.getItem('transaksi_dompetku_ios_v4')) || [];
+        let transaksiList = JSON.parse(localStorage.getItem('transaksi_dompetku_ios_v5')) || [];
         let myChart = null;
 
         function initForm() {
@@ -365,7 +396,7 @@
 
             if (myChart) myChart.destroy();
 
-            const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = document.documentElement.classList.contains('dark');
 
             myChart = new Chart(ctx, {
                 type: 'doughnut',
@@ -424,7 +455,7 @@
         }
 
         function simpanDanRender() {
-            localStorage.setItem('transaksi_dompetku_ios_v4', JSON.stringify(transaksiList));
+            localStorage.setItem('transaksi_dompetku_ios_v5', JSON.stringify(transaksiList));
             let totalPemasukan = 0, totalPengeluaran = 0;
             const listEl = document.getElementById('list-transaksi');
             listEl.innerHTML = '';
@@ -467,6 +498,8 @@
             updateBudgeting503020(totalPemasukan);
         }
 
+        // Jalankan saat pertama kali dimuat
+        initTheme();
         initForm();
         setTipe('pengeluaran');
         simpanDanRender();
