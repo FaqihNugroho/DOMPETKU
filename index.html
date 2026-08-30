@@ -13,218 +13,201 @@
     <!-- Google Font Plus Jakarta Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- VARIABEL WARNA OTOMATIS (LIGHT & DARK MODE) --- */
+        /* --- TEMA WARNA OTENTIK KHAS iOS (LIGHT & DARK MODE) --- */
         :root {
-            --bg-body-gradient: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.25) 0%, transparent 40%),
-                                radial-gradient(circle at 90% 80%, rgba(88, 86, 214, 0.25) 0%, transparent 40%),
-                                radial-gradient(circle at 50% 50%, rgba(52, 199, 89, 0.15) 0%, transparent 60%),
-                                #f2f2f7;
-            --text-main: #1C1C1E;
-            --card-bg: rgba(255, 255, 255, 0.65);
-            --card-border: rgba(255, 255, 255, 0.8);
-            --card-border-top: rgba(255, 255, 255, 1);
-            --input-bg: rgba(255, 255, 255, 0.6);
-            --input-border: rgba(255, 255, 255, 0.8);
+            --bg-body: #F2F2F7; /* Warna latar belakang sistem iOS Light */
+            --text-main: #000000;
+            --text-muted: #8E8E93;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border: rgba(209, 209, 214, 0.6);
+            --input-bg: rgba(118, 118, 128, 0.08);
+            --input-border: rgba(0, 0, 0, 0.04);
+            --inner-box-bg: rgba(118, 118, 128, 0.05);
+            --inner-box-border: rgba(0, 0, 0, 0.03);
         }
 
-        /* Deteksi Otomatis Dark Mode dari Sistem Perangkat (OS) */
+        /* Dark Mode Asli Apple / iOS (OLED True Black & Dark Gray Material) */
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-body-gradient: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.15) 0%, transparent 40%),
-                                    radial-gradient(circle at 90% 80%, rgba(88, 86, 214, 0.15) 0%, transparent 40%),
-                                    radial-gradient(circle at 50% 50%, rgba(52, 199, 89, 0.08) 0%, transparent 60%),
-                                    #09090b;
-                --text-main: #f8fafc;
-                --card-bg: rgba(20, 20, 25, 0.65);
-                --card-border: rgba(255, 255, 255, 0.1);
-                --card-border-top: rgba(255, 255, 255, 0.2);
-                --input-bg: rgba(0, 0, 0, 0.3);
-                --input-border: rgba(255, 255, 255, 0.1);
+                --bg-body: #000000; /* True Black ala OLED iPhone */
+                --text-main: #FFFFFF;
+                --text-muted: #98989F;
+                --card-bg: rgba(28, 28, 30, 0.75); /* iOS Dark Grouped Background Material */
+                --card-border: rgba(84, 84, 88, 0.65);
+                --input-bg: rgba(118, 118, 128, 0.24);
+                --input-border: rgba(255, 255, 255, 0.06);
+                --inner-box-bg: rgba(255, 255, 255, 0.05);
+                --inner-box-border: rgba(255, 255, 255, 0.06);
             }
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg-body-gradient) !important;
-            background-attachment: fixed;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-body) !important;
             color: var(--text-main) !important;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Efek Liquid Glass iOS Utama */
-        .ios-liquid-card {
-            background: var(--card-bg) !important;
+        /* Efek Kaca Transparan Khas iOS (UIKit Blur Effect) */
+        .ios-card {
+            background-color: var(--card-bg) !important;
             backdrop-filter: blur(25px) saturate(180%);
             -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid var(--card-border) !important;
-            border-top: 1px solid var(--card-border-top) !important;
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07),
-                        inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
-            border-radius: 2rem;
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            border: 0.5px solid var(--card-border) !important;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
-        /* Kartu Hero Liquid Glass Khusus Saldo */
-        .ios-liquid-hero {
-            background: linear-gradient(135deg, rgba(0, 122, 255, 0.8) 0%, rgba(88, 86, 214, 0.8) 100%);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-top: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 25px 50px -12px rgba(0, 122, 255, 0.45),
-                        inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
-            border-radius: 2rem;
+        /* Kartu Saldo Utama (Gaya Apple Card / Apple Pay) */
+        .ios-hero-card {
+            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            box-shadow: 0 12px 35px rgba(0, 122, 255, 0.3);
+            border: 0.5px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Input & Elemen Interaktif */
+        /* Input Form ala iOS Settings / Form Field */
         .ios-input {
-            background: var(--input-bg) !important;
-            border: 1px solid var(--input-border) !important;
+            background-color: var(--input-bg) !important;
+            border: 0.5px solid var(--input-border) !important;
             color: var(--text-main) !important;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: all 0.25s ease;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
         }
         .ios-input:focus {
-            background: var(--card-bg);
-            border-color: #007AFF;
-            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
+            border-color: #007AFF !important;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+            outline: none;
         }
 
+        /* Kotak Dalam / List Item */
+        .ios-inner-box {
+            background-color: var(--inner-box-bg);
+            border: 0.5px solid var(--inner-box-border);
+        }
+
+        /* Hilangkan Scrollbar Bawaan tapi tetap bisa di-scroll */
         ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
+            width: 4px;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.15);
+            background: rgba(142, 142, 147, 0.3);
             border-radius: 4px;
         }
     </style>
 </head>
 <body class="pb-12">
 
-    <!-- Wrapper Utama Responsive -->
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10">
+    <!-- Wrapper Utama -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-8">
 
-        <!-- Header Utama -->
-        <header class="flex justify-between items-center mb-6">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#007AFF] to-[#5856D6] flex items-center justify-center shadow-lg shadow-blue-500/30 text-white text-sm border border-white/40">
+                <div class="w-10 h-10 rounded-2xl bg-[#007AFF] flex items-center justify-center text-white shadow-md shadow-blue-500/20 text-sm">
                     <i class="fa-solid fa-wallet"></i>
                 </div>
                 <div>
-                    <h1 class="text-base font-extrabold tracking-tight">DOMPETKU</h1>
-                    <p class="text-xs text-slate-400 font-medium">Catatan Keuangan Pribadi</p>
+                    <h1 class="text-base font-bold tracking-tight">DOMPETKU</h1>
+                    <p class="text-xs text-[var(--text-muted)]">Keuangan Pribadi</p>
                 </div>
             </div>
         </header>
 
-        <!-- Layout Grid Utama -->
+        <!-- Layout Utama -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
             <!-- KOLOM KIRI -->
             <div class="space-y-6">
-                <!-- Kartu Saldo Utama -->
-                <div class="ios-liquid-hero p-6 text-white relative overflow-hidden">
-                    <div class="absolute right-[-20px] -bottom-[-20px] w-40 h-40 bg-white/20 rounded-full blur-3xl pointer-events-none"></div>
-
-                    <div class="mb-4 relative z-10">
-                        <div class="flex items-center justify-between">
-                            <p class="text-[10px] text-blue-100 uppercase tracking-wider font-extrabold">Total Saldo</p>
-                            <span class="text-[9px] bg-white/20 backdrop-blur-md text-white px-2.5 py-0.5 rounded-full font-bold border border-white/30 shadow-inner">IDR</span>
+                <!-- Kartu Saldo -->
+                <div class="ios-hero-card p-6 text-white relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                    <div class="mb-5 relative z-10">
+                        <div class="flex justify-between items-center">
+                            <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-100">Total Saldo</p>
+                            <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-full font-bold">IDR</span>
                         </div>
-                        <h2 id="total-saldo" class="text-3xl sm:text-4xl font-black mt-1.5 tracking-tight text-white drop-shadow-sm">Rp 0</h2>
+                        <h2 id="total-saldo" class="text-3xl font-extrabold mt-1 tracking-tight">Rp 0</h2>
                     </div>
-                    
-                    <!-- Pemasukan & Pengeluaran -->
-                    <div class="grid grid-cols-2 gap-2.5 pt-3.5 border-t border-white/20 relative z-10">
-                        <div class="bg-white/15 backdrop-blur-xl p-3 rounded-2xl border border-white/25 shadow-inner">
-                            <span class="text-[10px] text-emerald-200 flex items-center gap-1 font-bold uppercase tracking-wider"><i class="fa-solid fa-arrow-down-long"></i> Masuk</span>
-                            <p id="total-pemasukan" class="text-xs sm:text-sm font-extrabold text-white mt-1">Rp 0</p>
+                    <div class="grid grid-cols-2 gap-2 pt-3 border-t border-white/20 relative z-10">
+                        <div class="bg-black/10 backdrop-blur-md p-2.5 rounded-xl">
+                            <span class="text-[10px] text-emerald-300 font-bold uppercase flex items-center gap-1"><i class="fa-solid fa-arrow-down"></i> Masuk</span>
+                            <p id="total-pemasukan" class="text-xs font-bold mt-1">Rp 0</p>
                         </div>
-                        <div class="bg-white/15 backdrop-blur-xl p-3 rounded-2xl border border-white/25 shadow-inner">
-                            <span class="text-[10px] text-rose-200 flex items-center gap-1 font-bold uppercase tracking-wider"><i class="fa-solid fa-arrow-up-long"></i> Keluar</span>
-                            <p id="total-pengeluaran" class="text-xs sm:text-sm font-extrabold text-white mt-1">Rp 0</p>
+                        <div class="bg-black/10 backdrop-blur-md p-2.5 rounded-xl">
+                            <span class="text-[10px] text-rose-300 font-bold uppercase flex items-center gap-1"><i class="fa-solid fa-arrow-up"></i> Keluar</span>
+                            <p id="total-pengeluaran" class="text-xs font-bold mt-1">Rp 0</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- FORM INPUT -->
-                <section class="ios-liquid-card p-6">
-                    <h3 class="font-bold text-xs mb-4 flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-xl bg-blue-500/10 text-[#007AFF] flex items-center justify-center text-[10px] border border-blue-500/20"><i class="fa-solid fa-plus"></i></span>
-                        Catat Transaksi Baru
+                <!-- Form Input -->
+                <section class="ios-card p-5">
+                    <h3 class="font-bold text-xs mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-plus text-[#007AFF]"></i> Catat Transaksi
                     </h3>
                     <div id="form-container"></div>
                 </section>
 
-                <!-- Fitur Anggaran 50/30/20 -->
-                <section class="ios-liquid-card p-6 space-y-4">
+                <!-- Budgeting 50/30/20 -->
+                <section class="ios-card p-5 space-y-3.5">
                     <div class="flex justify-between items-center">
                         <h3 class="font-bold text-xs flex items-center gap-2">
-                            <span class="w-6 h-6 rounded-xl bg-blue-500/10 text-[#007AFF] flex items-center justify-center text-[10px] border border-blue-500/20"><i class="fa-solid fa-scale-balanced"></i></span> 
-                            Budgeting 50 / 30 / 20
+                            <i class="fa-solid fa-chart-pie text-[#5856D6]"></i> Budgeting 50/30/20
                         </h3>
-                        <span class="text-[10px] font-bold px-2.5 py-0.5 bg-white/20 backdrop-blur-md rounded-full border border-white/20 shadow-2xs">Keseluruhan</span>
                     </div>
-
-                    <div class="space-y-1.5">
-                        <div class="flex justify-between text-[11px] font-bold">
-                            <span class="opacity-80">50% Kebutuhan (Needs)</span>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-[11px] font-semibold">
+                            <span class="text-[var(--text-muted)]">50% Kebutuhan</span>
                             <span id="info-needs" class="text-[#007AFF]">Rp 0 / Rp 0</span>
                         </div>
-                        <div class="w-full bg-black/10 h-2 rounded-full overflow-hidden p-0.5 border border-white/20">
-                            <div id="bar-needs" class="bg-gradient-to-r from-blue-500 to-[#007AFF] h-full rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+                        <div class="w-full ios-inner-box h-2 rounded-full overflow-hidden">
+                            <div id="bar-needs" class="bg-[#007AFF] h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                         </div>
                     </div>
-
-                    <div class="space-y-1.5">
-                        <div class="flex justify-between text-[11px] font-bold">
-                            <span class="opacity-80">30% Keinginan (Wants)</span>
-                            <span id="info-wants" class="text-indigo-400">Rp 0 / Rp 0</span>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-[11px] font-semibold">
+                            <span class="text-[var(--text-muted)]">30% Keinginan</span>
+                            <span id="info-wants" class="text-[#5856D6]">Rp 0 / Rp 0</span>
                         </div>
-                        <div class="w-full bg-black/10 h-2 rounded-full overflow-hidden p-0.5 border border-white/20">
-                            <div id="bar-wants" class="bg-gradient-to-r from-indigo-400 to-indigo-600 h-full rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+                        <div class="w-full ios-inner-box h-2 rounded-full overflow-hidden">
+                            <div id="bar-wants" class="bg-[#5856D6] h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                         </div>
                     </div>
-
-                    <div class="pt-3 border-t border-white/20 flex justify-between items-center">
-                        <span class="text-[11px] font-bold opacity-80">20% Target Tabungan (Savings)</span>
-                        <span id="info-savings" class="text-xs font-extrabold text-emerald-500">Rp 0</span>
+                    <div class="pt-2 border-t border-black/5 dark:border-white/5 flex justify-between items-center text-[11px] font-semibold">
+                        <span class="text-[var(--text-muted)]">20% Tabungan (Savings)</span>
+                        <span id="info-savings" class="text-[#34C759] font-bold">Rp 0</span>
                     </div>
                 </section>
             </div>
 
-            <!-- KOLOM KANAN: Grafik & Riwayat Transaksi -->
+            <!-- KOLOM KANAN -->
             <div class="lg:col-span-2 space-y-6">
-                <!-- Grafik Analisis -->
-                <section class="ios-liquid-card p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-xs flex items-center gap-2">
-                            <span class="w-6 h-6 rounded-xl bg-blue-500/10 text-[#007AFF] flex items-center justify-center text-[10px] border border-blue-500/20"><i class="fa-solid fa-chart-pie"></i></span> 
-                            Analisis Pengeluaran
-                        </h3>
-                        <span class="text-[10px] font-bold px-2.5 py-0.5 bg-white/20 backdrop-blur-md rounded-full border border-white/20 shadow-2xs">Keseluruhan</span>
-                    </div>
-                    <div class="relative w-full h-56 sm:h-64 flex justify-center items-center">
+                <!-- Grafik -->
+                <section class="ios-card p-5">
+                    <h3 class="font-bold text-xs mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-[#34C759]"></i> Analisis Pengeluaran
+                    </h3>
+                    <div class="relative w-full h-52 sm:h-60 flex justify-center items-center">
                         <canvas id="grafikKategori"></canvas>
                     </div>
                 </section>
 
-                <!-- Riwayat Transaksi -->
-                <section class="ios-liquid-card p-6">
-                    <div class="flex justify-between items-center mb-4">
+                <!-- Riwayat -->
+                <section class="ios-card p-5">
+                    <div class="flex justify-between items-center mb-3">
                         <h3 class="font-bold text-xs flex items-center gap-2">
-                            <span class="w-6 h-6 rounded-xl bg-blue-500/10 text-[#007AFF] flex items-center justify-center text-[10px] border border-blue-500/20"><i class="fa-solid fa-clock-rotate-left"></i></span>
-                            Riwayat Transaksi
+                            <i class="fa-solid fa-clock-rotate-left text-[#FF9500]"></i> Riwayat Transaksi
                         </h3>
-                        <button onclick="resetSemuaData()" class="text-[11px] text-rose-500 font-bold hover:bg-rose-500/10 px-3 py-1 rounded-xl transition">Reset Semua</button>
+                        <button onclick="resetSemuaData()" class="text-[11px] text-[#FF3B30] font-semibold hover:opacity-80 transition">Reset</button>
                     </div>
-                    
-                    <div id="list-transaksi" class="space-y-2.5 max-h-[520px] overflow-y-auto pr-1">
-                        <p id="empty-state" class="text-center opacity-50 text-xs py-10">Belum ada catatan transaksi.</p>
+                    <div id="list-transaksi" class="space-y-2 max-h-[460px] overflow-y-auto pr-1">
+                        <p id="empty-state" class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada transaksi.</p>
                     </div>
                 </section>
             </div>
@@ -232,62 +215,54 @@
         </div>
     </div>
 
-    <!-- Template Form HTML -->
+    <!-- Template Form -->
     <template id="template-form">
         <form onsubmit="submitTransaksi(event)" class="flex flex-col gap-2.5">
-            <div class="grid grid-cols-2 gap-1.5 bg-black/10 backdrop-blur-xl p-1.5 rounded-2xl border border-white/20">
-                <button type="button" id="btn-pemasukan" onclick="setTipe('pemasukan')" class="py-2 rounded-xl text-xs font-bold opacity-70 transition-all">Pemasukan</button>
-                <button type="button" id="btn-pengeluaran" onclick="setTipe('pengeluaran')" class="py-2 rounded-xl text-xs font-bold bg-white text-[#007AFF] shadow-md shadow-black/5 transition-all">Pengeluaran</button>
+            <div class="grid grid-cols-2 gap-1 ios-inner-box p-1 rounded-xl">
+                <button type="button" id="btn-pemasukan" onclick="setTipe('pemasukan')" class="py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition">Masuk</button>
+                <button type="button" id="btn-pengeluaran" onclick="setTipe('pengeluaran')" class="py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition">Keluar</button>
             </div>
-
-            <div class="w-full">
-                <input type="text" id="keterangan" placeholder="Keterangan (Cth: Nasi Padang)" required class="w-full px-4 py-2.5 ios-input rounded-xl focus:outline-none text-xs font-bold transition placeholder:font-normal placeholder:opacity-50">
+            <div>
+                <input type="text" id="keterangan" placeholder="Keterangan (Cth: Belanja Bulanan)" required class="w-full px-3.5 py-2 ios-input text-xs font-medium">
             </div>
-
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div class="w-full">
-                    <input type="text" id="nominal" inputmode="numeric" placeholder="Nominal (Rp)" required class="w-full px-4 py-2.5 ios-input rounded-xl focus:outline-none text-xs font-bold transition placeholder:font-normal placeholder:opacity-50">
+                <div>
+                    <input type="text" id="nominal" inputmode="numeric" placeholder="Nominal (Rp)" required class="w-full px-3.5 py-2 ios-input text-xs font-medium">
                 </div>
-                <div class="w-full">
-                    <select id="kategori" class="w-full px-4 py-2.5 ios-input rounded-xl focus:outline-none text-xs font-bold transition">
+                <div>
+                    <select id="kategori" class="w-full px-3.5 py-2 ios-input text-xs font-medium">
                     </select>
                 </div>
             </div>
-
-            <button type="submit" class="w-full bg-gradient-to-r from-[#007AFF] to-[#5856D6] text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-500/30 hover:opacity-95 active:scale-[0.98] transition text-xs tracking-wide border border-white/30 mt-0.5">Simpan Transaksi</button>
+            <button type="submit" class="w-full bg-[#007AFF] text-white font-bold py-2.5 rounded-xl shadow-md shadow-blue-500/20 hover:opacity-90 transition text-xs mt-1">Simpan</button>
         </form>
     </template>
 
-    <!-- JavaScript Logika & State -->
+    <!-- Skrip Logika -->
     <script>
         let tipeAktif = 'pengeluaran';
-        let transaksiList = JSON.parse(localStorage.getItem('transaksi_dompetku_v24')) || [];
+        let transaksiList = JSON.parse(localStorage.getItem('transaksi_dompetku_ios')) || [];
         let myChart = null;
 
         function initForm() {
             const template = document.getElementById('template-form').content;
             document.getElementById('form-container').appendChild(template.cloneNode(true));
-            
             setupNominalListener();
             updatePilihanKategori();
         }
 
         function setupNominalListener() {
-            document.querySelectorAll('#nominal').forEach(inputNominal => {
-                inputNominal.addEventListener('input', function (e) {
+            document.querySelectorAll('#nominal').forEach(input => {
+                input.addEventListener('input', function() {
                     let value = this.value.replace(/[^,\d]/g, '').toString();
                     let split = value.split(',');
                     let sisa = split[0].length % 3;
                     let rupiah = split[0].substr(0, sisa);
                     let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
                     if (ribuan) {
-                        let separator = sisa ? '.' : '';
-                        rupiah += separator + ribuan.join('.');
+                        rupiah += (sisa ? '.' : '') + ribuan.join('.');
                     }
-
                     rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
-                    
                     document.querySelectorAll('#nominal').forEach(inp => inp.value = rupiah);
                 });
             });
@@ -305,56 +280,51 @@
 
         const daftarKategori = {
             pemasukan: [
-                { value: 'Gaji', label: 'Gaji' },
+                { value: 'Gaji', label: 'Gaji / Pemasukan Utama' },
                 { value: 'Lainnya', label: 'Pemasukan Lainnya' }
             ],
             pengeluaran: [
                 { value: 'Makanan/Minuman', label: 'Makanan & Minuman (Needs)' },
                 { value: 'Tagihan', label: 'Tagihan & Utilitas (Needs)' },
                 { value: 'Transport', label: 'Transportasi (Needs)' },
-                { value: 'Belanja', label: 'Belanja & Kebutuhan (Wants)' },
+                { value: 'Belanja', label: 'Belanja & Barang (Wants)' },
                 { value: 'Hiburan', label: 'Hiburan & Lifestyle (Wants)' },
                 { value: 'Lainnya', label: 'Pengeluaran Lainnya (Wants)' }
             ]
         };
 
         function updatePilihanKategori() {
-            document.querySelectorAll('#kategori').forEach(selectKategori => {
-                selectKategori.innerHTML = '';
-                const list = daftarKategori[tipeAktif];
-                list.forEach(item => {
+            document.querySelectorAll('#kategori').forEach(select => {
+                select.innerHTML = '';
+                daftarKategori[tipeAktif].forEach(item => {
                     const opt = document.createElement('option');
                     opt.value = item.value;
                     opt.textContent = item.label;
-                    selectKategori.appendChild(opt);
+                    select.appendChild(opt);
                 });
             });
         }
 
         function setTipe(tipe) {
             tipeAktif = tipe;
-            
-            document.querySelectorAll('button[onclick^="setTipe"]').forEach(btn => {
-                const isMasuk = btn.getAttribute('onclick').includes('pemasukan');
-                if ((tipe === 'pemasukan' && isMasuk) || (tipe === 'pengeluaran' && !isMasuk)) {
-                    btn.className = "py-2 rounded-xl text-xs font-bold bg-white text-[#007AFF] shadow-md shadow-black/5 transition-all";
-                } else {
-                    btn.className = "py-2 rounded-xl text-xs font-bold opacity-70 transition-all";
-                }
-            });
+            const btnMasuk = document.getElementById('btn-pemasukan');
+            const btnKeluar = document.getElementById('btn-pengeluaran');
 
+            if (tipe === 'pemasukan') {
+                btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold bg-[#34C759] text-white shadow-sm transition";
+                btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent";
+            } else {
+                btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition";
+                btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent";
+            }
             updatePilihanKategori();
         }
 
         function submitTransaksi(e) {
             e.preventDefault();
-            
             const keterangan = document.getElementById('keterangan').value;
-            const rawNominal = document.getElementById('nominal').value.replace(/\./g, '');
-            const nominal = parseFloat(rawNominal);
+            const nominal = parseFloat(document.getElementById('nominal').value.replace(/\./g, ''));
             const kategori = document.getElementById('kategori').value;
-
-            const d = new Date();
 
             const transaksiBaru = {
                 id: Date.now(),
@@ -362,12 +332,11 @@
                 keterangan,
                 nominal,
                 kategori,
-                tanggal: d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+                tanggal: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
             };
 
             transaksiList.unshift(transaksiBaru);
             simpanDanRender();
-            
             document.querySelectorAll('#keterangan').forEach(i => i.value = '');
             document.querySelectorAll('#nominal').forEach(i => i.value = '');
             setTipe('pengeluaran');
@@ -379,7 +348,7 @@
         }
 
         function resetSemuaData() {
-            if(confirm("Yakin mau hapus seluruh riwayat transaksi?")) {
+            if (confirm("Hapus seluruh riwayat transaksi?")) {
                 transaksiList = [];
                 simpanDanRender();
             }
@@ -391,27 +360,13 @@
 
         function updateGrafik() {
             const ctx = document.getElementById('grafikKategori').getContext('2d');
-            
-            const dataKategori = {
-                'Makanan/Minuman': 0,
-                'Transport': 0,
-                'Belanja': 0,
-                'Tagihan': 0,
-                'Hiburan': 0,
-                'Lainnya': 0
-            };
+            const dataKategori = { 'Makanan/Minuman': 0, 'Transport': 0, 'Belanja': 0, 'Tagihan': 0, 'Hiburan': 0, 'Lainnya': 0 };
 
             transaksiList.filter(t => t.tipe === 'pengeluaran').forEach(t => {
-                if (dataKategori[t.kategori] !== undefined) {
-                    dataKategori[t.kategori] += t.nominal;
-                }
+                if (dataKategori[t.kategori] !== undefined) dataKategori[t.kategori] += t.nominal;
             });
 
-            const dataValues = Object.values(dataKategori);
-
-            if (myChart) {
-                myChart.destroy();
-            }
+            if (myChart) myChart.destroy();
 
             const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -420,11 +375,11 @@
                 data: {
                     labels: Object.keys(dataKategori),
                     datasets: [{
-                        data: dataValues,
-                        backgroundColor: ['#007AFF', '#5856D6', '#AF52DE', '#FF2D55', '#FF9500', '#8E8E93'],
+                        data: Object.values(dataKategori),
+                        backgroundColor: ['#007AFF', '#34C759', '#FF9500', '#FF3B30', '#5856D6', '#8E8E93'],
                         borderWidth: 2,
-                        borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.8)',
-                        hoverOffset: 6
+                        borderColor: isDark ? '#1C1C1E' : '#FFFFFF',
+                        hoverOffset: 4
                     }]
                 },
                 options: {
@@ -433,10 +388,10 @@
                     plugins: {
                         legend: {
                             position: 'right',
-                            labels: { 
-                                boxWidth: 10, 
-                                font: { size: 11, family: 'Plus Jakarta Sans', weight: '600' }, 
-                                color: isDark ? '#f8fafc' : '#334155' 
+                            labels: {
+                                boxWidth: 8,
+                                font: { size: 10, family: 'Plus Jakarta Sans', weight: '600' },
+                                color: isDark ? '#98989F' : '#8E8E93'
                             }
                         }
                     }
@@ -445,100 +400,76 @@
         }
 
         function updateBudgeting503020(totalPemasukan) {
-            let totalNeeds = 0;
-            let totalWants = 0;
-
-            const needsCategories = ['Makanan/Minuman', 'Tagihan', 'Transport'];
+            let totalNeeds = 0, totalWants = 0;
+            const needsCat = ['Makanan/Minuman', 'Tagihan', 'Transport'];
 
             transaksiList.filter(t => t.tipe === 'pengeluaran').forEach(t => {
-                if (needsCategories.includes(t.kategori)) {
-                    totalNeeds += t.nominal;
-                } else {
-                    totalWants += t.nominal;
-                }
+                if (needsCat.includes(t.kategori)) totalNeeds += t.nominal;
+                else totalWants += t.nominal;
             });
 
             const idealNeeds = totalPemasukan * 0.50;
             const idealWants = totalPemasukan * 0.30;
             const idealSavings = totalPemasukan * 0.20;
 
-            let pctNeeds = idealNeeds > 0 ? (totalNeeds / idealNeeds) * 100 : 0;
-            let pctWants = idealWants > 0 ? (totalWants / idealWants) * 100 : 0;
-            if (pctNeeds > 100) pctNeeds = 100;
-            if (pctWants > 100) pctWants = 100;
+            let pctNeeds = idealNeeds > 0 ? Math.min((totalNeeds / idealNeeds) * 100, 100) : 0;
+            let pctWants = idealWants > 0 ? Math.min((totalWants / idealWants) * 100, 100) : 0;
 
             document.getElementById('info-needs').innerText = `${formatRupiah(totalNeeds)} / ${formatRupiah(idealNeeds)}`;
             document.getElementById('bar-needs').style.width = `${pctNeeds}%`;
-            if (totalNeeds > idealNeeds && idealNeeds > 0) {
-                document.getElementById('bar-needs').className = "bg-rose-500 h-full rounded-full transition-all duration-700 ease-out";
-            } else {
-                document.getElementById('bar-needs').className = "bg-gradient-to-r from-blue-500 to-[#007AFF] h-full rounded-full transition-all duration-700 ease-out";
-            }
+            document.getElementById('bar-needs').className = totalNeeds > idealNeeds ? "bg-[#FF3B30] h-full rounded-full transition-all" : "bg-[#007AFF] h-full rounded-full transition-all";
 
             document.getElementById('info-wants').innerText = `${formatRupiah(totalWants)} / ${formatRupiah(idealWants)}`;
             document.getElementById('bar-wants').style.width = `${pctWants}%`;
-            if (totalWants > idealWants && idealWants > 0) {
-                document.getElementById('bar-wants').className = "bg-rose-500 h-full rounded-full transition-all duration-700 ease-out";
-            } else {
-                document.getElementById('bar-wants').className = "bg-gradient-to-r from-indigo-400 to-indigo-600 h-full rounded-full transition-all duration-700 ease-out";
-            }
+            document.getElementById('bar-wants').className = totalWants > idealWants ? "bg-[#FF3B30] h-full rounded-full transition-all" : "bg-[#5856D6] h-full rounded-full transition-all";
 
             document.getElementById('info-savings').innerText = formatRupiah(idealSavings);
         }
 
         function simpanDanRender() {
-            localStorage.setItem('transaksi_dompetku_v24', JSON.stringify(transaksiList));
-            
-            let totalPemasukan = 0;
-            let totalPengeluaran = 0;
+            localStorage.setItem('transaksi_dompetku_ios', JSON.stringify(transaksiList));
+            let totalPemasukan = 0, totalPengeluaran = 0;
             const listEl = document.getElementById('list-transaksi');
             listEl.innerHTML = '';
 
             if (transaksiList.length === 0) {
-                listEl.innerHTML = `<p class="text-center opacity-50 text-xs py-10">Belum ada catatan transaksi.</p>`;
+                listEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada transaksi.</p>`;
             } else {
                 transaksiList.forEach(t => {
                     if (t.tipe === 'pemasukan') totalPemasukan += t.nominal;
                     else totalPengeluaran += t.nominal;
 
-                    const iconClass = ikonKategori[t.kategori] || 'fa-circle';
-
                     const itemEl = document.createElement('div');
-                    itemEl.className = "flex justify-between items-center p-3.5 bg-white/10 hover:bg-white/20 rounded-2xl border border-white/20 transition-all duration-200 shadow-2xs";
+                    itemEl.className = "flex justify-between items-center p-3 ios-inner-box rounded-xl transition";
                     itemEl.innerHTML = `
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl flex items-center justify-center ${t.tipe === 'pemasukan' ? 'bg-emerald-500/15 text-emerald-500 border border-emerald-500/20' : 'bg-blue-500/10 text-[#007AFF] border border-blue-500/20'}">
-                                <i class="fa-solid ${iconClass} text-xs"></i>
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg flex items-center justify-center ${t.tipe === 'pemasukan' ? 'bg-[#34C759]/15 text-[#34C759]' : 'bg-[#007AFF]/15 text-[#007AFF]'}">
+                                <i class="fa-solid ${ikonKategori[t.kategori] || 'fa-circle'} text-xs"></i>
                             </div>
                             <div>
-                                <p class="font-bold text-xs sm:text-sm">${t.keterangan}</p>
-                                <div class="flex items-center gap-2 mt-0.5">
-                                    <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-md opacity-80 font-bold border border-white/10">${t.kategori}</span>
-                                    <span class="text-[10px] opacity-50 font-semibold">${t.tanggal}</span>
-                                </div>
+                                <p class="font-bold text-xs">${t.keterangan}</p>
+                                <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • ${t.tanggal}</p>
                             </div>
                         </div>
-                        <div class="text-right flex items-center gap-3">
-                            <span class="font-extrabold text-xs sm:text-sm ${t.tipe === 'pemasukan' ? 'text-emerald-500' : 'text-rose-500'}">
+                        <div class="flex items-center gap-3">
+                            <span class="font-bold text-xs ${t.tipe === 'pemasukan' ? 'text-[#34C759]' : 'text-[var(--text-main)]'}">
                                 ${t.tipe === 'pemasukan' ? '+' : '-'} ${formatRupiah(t.nominal)}
                             </span>
-                            <button onclick="hapusTransaksi(${t.id})" class="opacity-40 hover:opacity-100 hover:text-rose-500 transition text-xs p-1.5"><i class="fa-solid fa-trash-can"></i></button>
+                            <button onclick="hapusTransaksi(${t.id})" class="text-[var(--text-muted)] hover:text-[#FF3B30] text-xs"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                     `;
                     listEl.appendChild(itemEl);
                 });
             }
 
-            const totalSaldo = totalPemasukan - totalPengeluaran;
             document.getElementById('total-pemasukan').innerText = formatRupiah(totalPemasukan);
             document.getElementById('total-pengeluaran').innerText = formatRupiah(totalPengeluaran);
-            document.getElementById('total-saldo').innerText = formatRupiah(totalSaldo);
+            document.getElementById('total-saldo').innerText = formatRupiah(totalPemasukan - totalPengeluaran);
 
             updateGrafik();
             updateBudgeting503020(totalPemasukan);
         }
 
-        // Jalankan saat pertama kali load
         initForm();
         setTipe('pengeluaran');
         simpanDanRender();
