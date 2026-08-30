@@ -13,7 +13,7 @@
     <!-- Google Font Plus Jakarta Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- TEMA WARNA OTENTIK iOS DENGAN KONTRAS MAKSIMAL --- */
+        /* --- TEMA WARNA: BACKGROUND HITAM PEKAT + KARTU GREY TEGAS --- */
         :root {
             --bg-body: #F2F2F7;
             --text-main: #000000;
@@ -26,18 +26,18 @@
             --inner-box-border: rgba(60, 60, 67, 0.1);
         }
 
-        /* Dark Mode dengan Background Abu Gelap Elegan (Form Jelas & Kontras) */
+        /* Dark Mode: Latar Belakang Hitam Pekat (#000000), Kartu & Form Grey Tegas */
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-body: #121214; /* Diubah dari hitam pekat ke abu gelap agar kontras form terlihat jelas */
-                --text-main: #F4F4F6;
-                --text-muted: #98989F;
-                --card-bg: #1C1C1E; /* Solid/Semi-transparan lembut agar kontras dengan latar belakang */
-                --card-border: rgba(255, 255, 255, 0.15); /* Garis tepi lebih jelas */
-                --input-bg: #2C2C2E; /* Input form kontras dengan card */
-                --input-border: rgba(255, 255, 255, 0.12);
-                --inner-box-bg: #252528;
-                --inner-box-border: rgba(255, 255, 255, 0.08);
+                --bg-body: #000000; /* Latar belakang halaman hitam pekat sesuai permintaan */
+                --text-main: #F8FAFC;
+                --text-muted: #A1A1AA;
+                --card-bg: #1E1E22; /* Kartu abu-abu tegas agar kontras dengan background hitam */
+                --card-border: rgba(255, 255, 255, 0.18); /* Garis tepi kartu jelas */
+                --input-bg: #2A2A2E; /* Input form abu-abu solid */
+                --input-border: rgba(255, 255, 255, 0.15);
+                --inner-box-bg: #252529;
+                --inner-box-border: rgba(255, 255, 255, 0.1);
             }
         }
 
@@ -57,7 +57,7 @@
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--card-border) !important;
             border-radius: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
         }
 
@@ -238,7 +238,7 @@
     <!-- Skrip Logika -->
     <script>
         let tipeAktif = 'pengeluaran';
-        let transaksiList = JSON.parse(localStorage.getItem('transaksi_dompetku_ios_v2')) || [];
+        let transaksiList = JSON.parse(localStorage.getItem('transaksi_dompetku_ios_v4')) || [];
         let myChart = null;
 
         function initForm() {
@@ -375,7 +375,7 @@
                         data: Object.values(dataKategori),
                         backgroundColor: ['#007AFF', '#34C759', '#FF9500', '#FF3B30', '#5856D6', '#8E8E93'],
                         borderWidth: 2,
-                        borderColor: isDark ? '#1C1C1E' : '#FFFFFF',
+                        borderColor: isDark ? '#1E1E22' : '#FFFFFF',
                         hoverOffset: 4
                     }]
                 },
@@ -388,7 +388,7 @@
                             labels: {
                                 boxWidth: 8,
                                 font: { size: 10, family: 'Plus Jakarta Sans', weight: '600' },
-                                color: isDark ? '#98989F' : '#8E8E93'
+                                color: isDark ? '#A1A1AA' : '#8E8E93'
                             }
                         }
                     }
@@ -424,7 +424,7 @@
         }
 
         function simpanDanRender() {
-            localStorage.setItem('transaksi_dompetku_ios_v2', JSON.stringify(transaksiList));
+            localStorage.setItem('transaksi_dompetku_ios_v4', JSON.stringify(transaksiList));
             let totalPemasukan = 0, totalPengeluaran = 0;
             const listEl = document.getElementById('list-transaksi');
             listEl.innerHTML = '';
