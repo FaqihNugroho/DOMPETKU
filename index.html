@@ -126,7 +126,7 @@
 
             <!-- KOLOM KIRI -->
             <div class="space-y-6">
-                <!-- Kartu Saldo (Menyesuaikan Filter Bulan Aktif) -->
+                <!-- Kartu Saldo -->
                 <div class="ios-hero-card p-6 text-white relative overflow-hidden">
                     <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
                     <div class="mb-5 relative z-10">
@@ -207,11 +207,10 @@
                             <i class="fa-solid fa-clock-rotate-left text-[#FF9500]"></i> Rekapan & Riwayat
                         </h3>
                         
-                        <!-- Pilihan Filter Bulan / Lembaran Baru -->
+                        <!-- Pilihan Filter Bulan -->
                         <div class="flex items-center gap-2 w-full sm:w-auto">
                             <label class="text-[11px] font-bold text-[var(--text-muted)] whitespace-nowrap">Pilih Bulan:</label>
                             <select id="filter-bulan" onchange="gantiFilterBulan()" class="ios-input px-3 py-1.5 text-xs font-bold cursor-pointer w-full sm:w-40">
-                                <!-- Opsi bulan diisi otomatis oleh script -->
                             </select>
                         </div>
                     </div>
@@ -245,7 +244,7 @@
                 <button type="button" id="btn-pengeluaran" onclick="setTipe('pengeluaran')" class="py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer">Keluar</button>
             </div>
             <div>
-                <input type="text" id="keterangan" placeholder="Keterangan (Cth: Belanja Bulanan)" required class="w-full px-3.5 py-2 ios-input text-xs font-medium">
+                <input type="text" id="keterangan" placeholder="Keterangan (Cth: Beli Sunlight & Sabun)" required class="w-full px-3.5 py-2 ios-input text-xs font-medium">
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div>
@@ -335,7 +334,6 @@
             setupNominalListener();
             updatePilihanKategori();
 
-            // Isi pilihan tanggal (1-31)
             const selectTanggal = document.getElementById('pilih-tanggal');
             if (selectTanggal) {
                 selectTanggal.innerHTML = '';
@@ -348,7 +346,6 @@
                 selectTanggal.value = new Date().getDate();
             }
 
-            // Set default bulan form ke bulan saat ini
             const bulanIni = namaBulanList[new Date().getMonth()];
             const selectBulan = document.getElementById('pilih-bulan');
             if (selectBulan) selectBulan.value = bulanIni;
@@ -361,18 +358,15 @@
             const selectedBefore = selectFilter.value;
             selectFilter.innerHTML = '';
 
-            // Cari daftar bulan yang unik dari database transaksi, plus masukkan bulan berjalan
             const setBulan = new Set();
-            setBulan.add(namaBulanList[new Date().getMonth()]); // Bulan sekarang
+            setBulan.add(namaBulanList[new Date().getMonth()]);
             transaksiList.forEach(t => {
                 if (t.tanggal) {
-                    // Ekstrak nama bulan dari string tanggal (cth: "15 Agustus 2026" -> ambil "Agustus")
                     const parts = t.tanggal.split(' ');
                     if (parts.length >= 2) setBulan.add(parts[1]);
                 }
             });
 
-            // Urutkan berdasarkan urutan bulan kalender
             const daftarBulanTersedia = Array.from(setBulan).sort((a, b) => {
                 return namaBulanList.indexOf(a) - namaBulanList.indexOf(b);
             });
@@ -384,7 +378,6 @@
                 selectFilter.appendChild(opt);
             });
 
-            // Pertahankan pilihan user jika masih ada, jika tidak pilih bulan ini
             if (selectedBefore && daftarBulanTersedia.includes(selectedBefore)) {
                 selectFilter.value = selectedBefore;
             } else {
@@ -409,9 +402,11 @@
             });
         }
 
+        // Pemetaan Icon Kategori (Termasuk Kebutuhan Rumah Tangga)
         const ikonKategori = {
             'Gaji': 'fa-sack-dollar',
             'Makanan/Minuman': 'fa-utensils',
+            'Kebutuhan Rumah Tangga': 'fa-house-chimney', // Icon baru untuk Sunlight/Sabun
             'Tagihan': 'fa-bolt',
             'Transport': 'fa-car',
             'Belanja': 'fa-bag-shopping',
@@ -426,6 +421,7 @@
             ],
             pengeluaran: [
                 { value: 'Makanan/Minuman', label: 'Makanan & Minuman (Needs)' },
+                { value: 'Kebutuhan Rumah Tangga', label: 'Kebutuhan Rumah Tangga / Sabun (Needs)' }, // Kategori Baru
                 { value: 'Tagihan', label: 'Tagihan & Utilitas (Needs)' },
                 { value: 'Transport', label: 'Transportasi (Needs)' },
                 { value: 'Belanja', label: 'Belanja & Barang (Wants)' },
@@ -485,7 +481,6 @@
             renderAplikasi();
         }
 
-        // --- AMBIL DATA DARI SUPABASE ---
         async function ambilDataCloud() {
             const statusEl = document.getElementById('sync-status');
             try {
@@ -509,7 +504,6 @@
             }
         }
 
-        // --- SIMPAN TRANSAKSI KE SUPABASE ---
         async function submitTransaksi(e) {
             e.preventDefault();
             const btnSimpan = document.getElementById('btn-simpan');
@@ -539,9 +533,7 @@
                 document.querySelectorAll('#keterangan').forEach(i => i.value = '');
                 document.querySelectorAll('#nominal').forEach(i => i.value = '');
                 
-                // Otomatis ubah filter bulan ke bulan transaksi yang baru dimasukkan agar langsung terlihat
                 document.getElementById('filter-bulan').value = bulanPilihan;
-
                 setTipe('pengeluaran');
             } catch (err) {
                 alert('Gagal menyimpan transaksi: ' + err.message);
@@ -551,7 +543,6 @@
             }
         }
 
-        // --- HAPUS TRANSAKSI DARI SUPABASE ---
         async function hapusTransaksi(id) {
             if (!confirm("Hapus transaksi ini dari dompet bersama?")) return;
             try {
@@ -568,7 +559,15 @@
 
         function updateGrafik(transaksiBulanIni) {
             const ctx = document.getElementById('grafikKategori').getContext('2d');
-            const dataKategori = { 'Makanan/Minuman': 0, 'Transport': 0, 'Belanja': 0, 'Tagihan': 0, 'Hiburan': 0, 'Lainnya': 0 };
+            const dataKategori = { 
+                'Makanan/Minuman': 0, 
+                'Kebutuhan Rumah Tangga': 0, 
+                'Tagihan': 0, 
+                'Transport': 0, 
+                'Belanja': 0, 
+                'Hiburan': 0, 
+                'Lainnya': 0 
+            };
 
             transaksiBulanIni.filter(t => t.tipe === 'pengeluaran').forEach(t => {
                 if (dataKategori[t.kategori] !== undefined) dataKategori[t.kategori] += t.nominal;
@@ -584,7 +583,7 @@
                     labels: Object.keys(dataKategori),
                     datasets: [{
                         data: Object.values(dataKategori),
-                        backgroundColor: ['#007AFF', '#34C759', '#FF9500', '#FF3B30', '#5856D6', '#8E8E93'],
+                        backgroundColor: ['#007AFF', '#34C759', '#FF9500', '#FFCC00', '#FF3B30', '#5856D6', '#8E8E93'],
                         borderWidth: 2,
                         borderColor: isDark ? '#1E1E22' : '#FFFFFF',
                         hoverOffset: 4
@@ -609,7 +608,8 @@
 
         function updateBudgeting503020(totalPemasukan, transaksiBulanIni) {
             let totalNeeds = 0, totalWants = 0;
-            const needsCat = ['Makanan/Minuman', 'Tagihan', 'Transport'];
+            // Kategori yang dihitung masuk ke kelompok Needs (Termasuk Kebutuhan Rumah Tangga)
+            const needsCat = ['Makanan/Minuman', 'Kebutuhan Rumah Tangga', 'Tagihan', 'Transport'];
 
             transaksiBulanIni.filter(t => t.tipe === 'pengeluaran').forEach(t => {
                 if (needsCat.includes(t.kategori)) totalNeeds += t.nominal;
@@ -640,7 +640,6 @@
 
             document.getElementById('label-saldo-title').innerText = `Saldo Bulan ${bulanAktif}`;
 
-            // Filter transaksi hanya untuk bulan yang dipilih di dropdown
             const transaksiBulanIni = transaksiList.filter(t => {
                 if (!t.tanggal) return false;
                 return t.tanggal.includes(bulanAktif);
@@ -725,7 +724,6 @@
             updateBudgeting503020(totalPemasukan, transaksiBulanIni);
         }
 
-        // --- REAL-TIME LISTENER (SUPABASE) ---
         function setupRealtimeSync() {
             _supabase
                 .channel('public:transaksi')
@@ -735,7 +733,6 @@
                 .subscribe();
         }
 
-        // Inisialisasi Awal
         initTheme();
         initForm();
         setTipe('pengeluaran');
