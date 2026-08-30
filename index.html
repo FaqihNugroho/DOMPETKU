@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOMPETKU</title>
+    <title>DOMPETKU (Online Shared)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome Icon -->
@@ -200,16 +200,29 @@
                     </div>
                 </section>
 
-                <!-- Riwayat -->
+                <!-- Riwayat Terpisah (Tab / Pilihan Riwayat) -->
                 <section class="ios-card p-5">
-                    <div class="flex justify-between items-center mb-3">
+                    <div class="flex justify-between items-center mb-4">
                         <h3 class="font-bold text-xs flex items-center gap-2">
-                            <i class="fa-solid fa-clock-rotate-left text-[#FF9500]"></i> Riwayat Transaksi Online
+                            <i class="fa-solid fa-clock-rotate-left text-[#FF9500]"></i> Riwayat Transaksi
                         </h3>
                         <button onclick="resetSemuaData()" class="text-[11px] text-[#FF3B30] font-semibold hover:opacity-80 transition cursor-pointer">Reset Semua</button>
                     </div>
-                    <div id="list-transaksi" class="space-y-2 max-h-[460px] overflow-y-auto pr-1">
-                        <p id="empty-state" class="text-center text-[var(--text-muted)] text-xs py-8">Memuat data dari cloud...</p>
+
+                    <!-- Tombol Pilih Tampilan Riwayat -->
+                    <div class="grid grid-cols-2 gap-1 ios-inner-box p-1 rounded-xl mb-4">
+                        <button type="button" id="tab-btn-keluar" onclick="gantiTabRiwayat('pengeluaran')" class="py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer">Pengeluaran</button>
+                        <button type="button" id="tab-btn-masuk" onclick="gantiTabRiwayat('pemasukan')" class="py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition cursor-pointer">Pemasukan</button>
+                    </div>
+
+                    <!-- Daftar Riwayat Pengeluaran -->
+                    <div id="list-pengeluaran" class="space-y-2 max-h-[400px] overflow-y-auto pr-1">
+                        <p class="text-center text-[var(--text-muted)] text-xs py-8">Memuat data...</p>
+                    </div>
+
+                    <!-- Daftar Riwayat Pemasukan (Hidden by default) -->
+                    <div id="list-pemasukan" class="space-y-2 max-h-[400px] overflow-y-auto pr-1 hidden">
+                        <p class="text-center text-[var(--text-muted)] text-xs py-8">Memuat data...</p>
                     </div>
                 </section>
             </div>
@@ -236,14 +249,14 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" id="btn-simpan" class="w-full bg-[#007AFF] text-white font-bold py-2.5 rounded-xl shadow-md shadow-blue-500/20 hover:opacity-90 transition text-xs mt-1 cursor-pointer">SIMPAN</button>
+            <button type="submit" id="btn-simpan" class="w-full bg-[#007AFF] text-white font-bold py-2.5 rounded-xl shadow-md shadow-blue-500/20 hover:opacity-90 transition text-xs mt-1 cursor-pointer">Simpan ke Cloud</button>
         </form>
     </template>
 
     <!-- Skrip Supabase & Logika Aplikasi -->
     <script>
         // ==========================================
-        // KONFIGURASI SUPABASE (MASUKKAN KUNCI ANDA DI SINI)
+        // KONFIGURASI SUPABASE ANDA
         // ==========================================
         const SUPABASE_URL = 'https://npafjuaecwexkfvutlwj.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_foViRxthdk85P9UVhk4cmA_XmUGyToR';
@@ -280,6 +293,7 @@
         }
 
         let tipeAktif = 'pengeluaran';
+        let tabRiwayatAktif = 'pengeluaran';
         let transaksiList = [];
         let myChart = null;
 
@@ -359,6 +373,26 @@
             updatePilihanKategori();
         }
 
+        function gantiTabRiwayat(tab) {
+            tabRiwayatAktif = tab;
+            const btnKeluar = document.getElementById('tab-btn-keluar');
+            const btnMasuk = document.getElementById('tab-btn-masuk');
+            const listKeluar = document.getElementById('list-pengeluaran');
+            const listMasuk = document.getElementById('list-pemasukan');
+
+            if (tab === 'pengeluaran') {
+                btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer";
+                btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
+                listKeluar.classList.remove('hidden');
+                listMasuk.classList.add('hidden');
+            } else {
+                btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold bg-[#34C759] text-white shadow-sm transition cursor-pointer";
+                btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
+                listMasuk.classList.remove('hidden');
+                listKeluar.classList.add('hidden');
+            }
+        }
+
         // --- AMBIL DATA DARI SUPABASE ---
         async function ambilDataCloud() {
             const statusEl = document.getElementById('sync-status');
@@ -373,7 +407,7 @@
                 transaksiList = data || [];
                 renderAplikasi();
                 
-                statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online`;
+                statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online (Sinkron)`;
                 statusEl.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 flex items-center gap-1.5";
             } catch (err) {
                 console.error("Gagal memuat:", err.message);
@@ -413,7 +447,7 @@
                 alert('Gagal menyimpan transaksi: ' + err.message);
             } finally {
                 btnSimpan.disabled = false;
-                btnSimpan.innerText = "SIMPAN";
+                btnSimpan.innerText = "Simpan ke Cloud";
             }
         }
 
@@ -514,37 +548,74 @@
 
         function renderAplikasi() {
             let totalPemasukan = 0, totalPengeluaran = 0;
-            const listEl = document.getElementById('list-transaksi');
-            listEl.innerHTML = '';
+            const listPengeluaranEl = document.getElementById('list-pengeluaran');
+            const listPemasukanEl = document.getElementById('list-pemasukan');
+            
+            listPengeluaranEl.innerHTML = '';
+            listPemasukanEl.innerHTML = '';
+
+            let countKeluar = 0;
+            let countMasuk = 0;
 
             if (transaksiList.length === 0) {
-                listEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada transaksi online.</p>`;
+                listPengeluaranEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada pengeluaran.</p>`;
+                listPemasukanEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada pemasukan.</p>`;
             } else {
                 transaksiList.forEach(t => {
-                    if (t.tipe === 'pemasukan') totalPemasukan += t.nominal;
-                    else totalPengeluaran += t.nominal;
-
                     const itemEl = document.createElement('div');
                     itemEl.className = "flex justify-between items-center p-3 ios-inner-box rounded-xl transition";
-                    itemEl.innerHTML = `
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 rounded-lg flex items-center justify-center ${t.tipe === 'pemasukan' ? 'bg-[#34C759]/15 text-[#34C759]' : 'bg-[#007AFF]/15 text-[#007AFF]'}">
-                                <i class="fa-solid ${ikonKategori[t.kategori] || 'fa-circle'} text-xs"></i>
+
+                    if (t.tipe === 'pemasukan') {
+                        totalPemasukan += t.nominal;
+                        countMasuk++;
+                        itemEl.innerHTML = `
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#34C759]/15 text-[#34C759]">
+                                    <i class="fa-solid ${ikonKategori[t.kategori] || 'fa-circle'} text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-xs">${t.keterangan}</p>
+                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • ${t.tanggal}</p>
+                                </div>
                             </div>
-                            <div>
-                                <p class="font-bold text-xs">${t.keterangan}</p>
-                                <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • ${t.tanggal}</p>
+                            <div class="flex items-center gap-3">
+                                <span class="font-bold text-xs text-[#34C759]">
+                                    + ${formatRupiah(t.nominal)}
+                                </span>
+                                <button onclick="hapusTransaksi(${t.id})" class="text-[var(--text-muted)] hover:text-[#FF3B30] text-xs cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
                             </div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="font-bold text-xs ${t.tipe === 'pemasukan' ? 'text-[#34C759]' : 'text-[var(--text-main)]'}">
-                                ${t.tipe === 'pemasukan' ? '+' : '-'} ${formatRupiah(t.nominal)}
-                            </span>
-                            <button onclick="hapusTransaksi(${t.id})" class="text-[var(--text-muted)] hover:text-[#FF3B30] text-xs cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
-                        </div>
-                    `;
-                    listEl.appendChild(itemEl);
+                        `;
+                        listPemasukanEl.appendChild(itemEl);
+                    } else {
+                        totalPengeluaran += t.nominal;
+                        countKeluar++;
+                        itemEl.innerHTML = `
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#007AFF]/15 text-[#007AFF]">
+                                    <i class="fa-solid ${ikonKategori[t.kategori] || 'fa-circle'} text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-xs">${t.keterangan}</p>
+                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • ${t.tanggal}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="font-bold text-xs text-[var(--text-main)]">
+                                    - ${formatRupiah(t.nominal)}
+                                </span>
+                                <button onclick="hapusTransaksi(${t.id})" class="text-[var(--text-muted)] hover:text-[#FF3B30] text-xs cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        `;
+                        listPengeluaranEl.appendChild(itemEl);
+                    }
                 });
+
+                if (countKeluar === 0) {
+                    listPengeluaranEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada pengeluaran.</p>`;
+                }
+                if (countMasuk === 0) {
+                    listPemasukanEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada pemasukan.</p>`;
+                }
             }
 
             document.getElementById('total-pemasukan').innerText = formatRupiah(totalPemasukan);
@@ -560,7 +631,7 @@
             _supabase
                 .channel('public:transaksi')
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'transaksi' }, payload => {
-                    ambilDataCloud(); // Otomatis refresh data di HP Anda & Istri saat ada perubahan
+                    ambilDataCloud();
                 })
                 .subscribe();
         }
