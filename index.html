@@ -15,7 +15,6 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            /* Latar belakang dinamis agar efek liquid glass terlihat hidup */
             background: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.25) 0%, transparent 40%),
                         radial-gradient(circle at 90% 80%, rgba(88, 86, 214, 0.25) 0%, transparent 40%),
                         radial-gradient(circle at 50% 50%, rgba(52, 199, 89, 0.15) 0%, transparent 60%),
@@ -54,7 +53,7 @@
 
         /* Floating Card HP dengan Efek Liquid Glass */
         .ios-floating-liquid {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(30px) saturate(200%);
             -webkit-backdrop-filter: blur(30px) saturate(200%);
             border: 1px solid rgba(255, 255, 255, 0.9);
@@ -67,7 +66,7 @@
 
         /* Transisi Form Mobile yang Smooth */
         #form-container-mobile {
-            max-height: 450px;
+            max-height: 500px;
             opacity: 1;
             overflow: hidden;
             transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease-in-out, margin-top 0.3s ease-in-out;
@@ -80,14 +79,14 @@
 
         /* Input & Elemen Interaktif */
         .ios-input {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             transition: all 0.25s ease;
         }
         .ios-input:focus {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-color: #007AFF;
             box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
         }
@@ -102,7 +101,7 @@
         }
     </style>
 </head>
-<body class="pb-32 lg:pb-12">
+<body class="pb-36 lg:pb-12">
 
     <!-- Wrapper Utama Responsive -->
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10">
@@ -232,8 +231,8 @@
     </div>
 
     <!-- FORM INPUT FLOATING KHUSUS HP -->
-    <div class="fixed bottom-0 inset-x-0 z-50 px-4 pb-3 max-w-md mx-auto lg:hidden">
-        <section class="ios-floating-liquid p-5 shadow-2xl relative">
+    <div class="fixed bottom-0 inset-x-0 z-50 px-3 pb-3 max-w-lg mx-auto lg:hidden">
+        <section class="ios-floating-liquid p-4 sm:p-5 shadow-2xl relative">
             <!-- Header Card diklik untuk Toggle Naik / Turun -->
             <div onclick="toggleFormMobile()" class="flex justify-between items-center cursor-pointer select-none">
                 <h3 class="font-bold text-[#1C1C1E] text-xs flex items-center gap-2 m-0">
@@ -250,29 +249,29 @@
         </section>
     </div>
 
-    <!-- Template Form HTML -->
+    <!-- Template Form HTML (Responsif Flex Vertikal untuk Menjamin Keterangan Tampil) -->
     <template id="template-form">
-        <form onsubmit="submitTransaksi(event)" class="space-y-3">
+        <form onsubmit="submitTransaksi(event)" class="flex flex-col gap-2.5">
             <div class="grid grid-cols-2 gap-1.5 bg-black/5 backdrop-blur-xl p-1.5 rounded-2xl border border-white/60">
                 <button type="button" id="btn-pemasukan" onclick="setTipe('pemasukan')" class="py-2 rounded-xl text-xs font-bold text-slate-600 transition-all">Pemasukan</button>
                 <button type="button" id="btn-pengeluaran" onclick="setTipe('pengeluaran')" class="py-2 rounded-xl text-xs font-bold bg-white text-[#007AFF] shadow-md shadow-black/5 transition-all">Pengeluaran</button>
             </div>
 
-            <div>
+            <div class="w-full">
                 <input type="text" id="keterangan" placeholder="Keterangan (Cth: Nasi Padang)" required class="w-full px-4 py-2.5 ios-input rounded-xl focus:outline-none text-xs font-bold text-[#1C1C1E] transition placeholder:font-normal placeholder:text-slate-400">
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div>
+                <div class="w-full">
                     <input type="text" id="nominal" inputmode="numeric" placeholder="Nominal (Rp)" required class="w-full px-4 py-2.5 ios-input rounded-xl focus:outline-none text-xs font-bold text-[#1C1C1E] transition placeholder:font-normal placeholder:text-slate-400">
                 </div>
-                <div>
+                <div class="w-full">
                     <select id="kategori" class="w-full px-4 py-2.5 ios-input rounded-xl focus:outline-none text-xs font-bold text-[#1C1C1E] transition">
                     </select>
                 </div>
             </div>
 
-            <button type="submit" class="w-full bg-gradient-to-r from-[#007AFF] to-[#5856D6] text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-500/30 hover:opacity-95 active:scale-[0.98] transition text-xs tracking-wide border border-white/30">Simpan Transaksi</button>
+            <button type="submit" class="w-full bg-gradient-to-r from-[#007AFF] to-[#5856D6] text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-500/30 hover:opacity-95 active:scale-[0.98] transition text-xs tracking-wide border border-white/30 mt-0.5">Simpan Transaksi</button>
         </form>
     </template>
 
