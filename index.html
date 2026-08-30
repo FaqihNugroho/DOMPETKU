@@ -13,14 +13,41 @@
     <!-- Google Font Plus Jakarta Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* --- VARIABEL WARNA OTOMATIS (LIGHT & DARK MODE) --- */
+        :root {
+            --bg-body-gradient: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.25) 0%, transparent 40%),
+                                radial-gradient(circle at 90% 80%, rgba(88, 86, 214, 0.25) 0%, transparent 40%),
+                                radial-gradient(circle at 50% 50%, rgba(52, 199, 89, 0.15) 0%, transparent 60%),
+                                #f2f2f7;
+            --text-main: #1C1C1E;
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --card-border: rgba(255, 255, 255, 0.8);
+            --card-border-top: rgba(255, 255, 255, 1);
+            --input-bg: rgba(255, 255, 255, 0.6);
+            --input-border: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Deteksi Otomatis Dark Mode dari Sistem Perangkat (OS) */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body-gradient: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.15) 0%, transparent 40%),
+                                    radial-gradient(circle at 90% 80%, rgba(88, 86, 214, 0.15) 0%, transparent 40%),
+                                    radial-gradient(circle at 50% 50%, rgba(52, 199, 89, 0.08) 0%, transparent 60%),
+                                    #09090b;
+                --text-main: #f8fafc;
+                --card-bg: rgba(20, 20, 25, 0.65);
+                --card-border: rgba(255, 255, 255, 0.1);
+                --card-border-top: rgba(255, 255, 255, 0.2);
+                --input-bg: rgba(0, 0, 0, 0.3);
+                --input-border: rgba(255, 255, 255, 0.1);
+            }
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.25) 0%, transparent 40%),
-                        radial-gradient(circle at 90% 80%, rgba(88, 86, 214, 0.25) 0%, transparent 40%),
-                        radial-gradient(circle at 50% 50%, rgba(52, 199, 89, 0.15) 0%, transparent 60%),
-                        #f2f2f7;
+            background: var(--bg-body-gradient) !important;
             background-attachment: fixed;
-            color: #1C1C1E;
+            color: var(--text-main) !important;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -webkit-tap-highlight-color: transparent;
@@ -28,11 +55,11 @@
 
         /* Efek Liquid Glass iOS Utama */
         .ios-liquid-card {
-            background: rgba(255, 255, 255, 0.65);
+            background: var(--card-bg) !important;
             backdrop-filter: blur(25px) saturate(180%);
             -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-top: 1px solid rgba(255, 255, 255, 1);
+            border: 1px solid var(--card-border) !important;
+            border-top: 1px solid var(--card-border-top) !important;
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07),
                         inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
             border-radius: 2rem;
@@ -53,14 +80,15 @@
 
         /* Input & Elemen Interaktif */
         .ios-input {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: var(--input-bg) !important;
+            border: 1px solid var(--input-border) !important;
+            color: var(--text-main) !important;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             transition: all 0.25s ease;
         }
         .ios-input:focus {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--card-bg);
             border-color: #007AFF;
             box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
         }
@@ -87,8 +115,8 @@
                     <i class="fa-solid fa-wallet"></i>
                 </div>
                 <div>
-                    <h1 class="text-base font-extrabold tracking-tight text-[#1C1C1E]">DOMPETKU</h1>
-                    <p class="text-xs text-slate-500 font-medium">Catatan Keuangan Pribadi</p>
+                    <h1 class="text-base font-extrabold tracking-tight">DOMPETKU</h1>
+                    <p class="text-xs text-slate-400 font-medium">Catatan Keuangan Pribadi</p>
                 </div>
             </div>
         </header>
@@ -123,9 +151,9 @@
                     </div>
                 </div>
 
-                <!-- FORM INPUT (Tampil Normal di Semua Ukuran Layar di Bawah Saldo) -->
+                <!-- FORM INPUT -->
                 <section class="ios-liquid-card p-6">
-                    <h3 class="font-bold text-[#1C1C1E] text-xs mb-4 flex items-center gap-2">
+                    <h3 class="font-bold text-xs mb-4 flex items-center gap-2">
                         <span class="w-6 h-6 rounded-xl bg-blue-500/10 text-[#007AFF] flex items-center justify-center text-[10px] border border-blue-500/20"><i class="fa-solid fa-plus"></i></span>
                         Catat Transaksi Baru
                     </h3>
@@ -135,36 +163,36 @@
                 <!-- Fitur Anggaran 50/30/20 -->
                 <section class="ios-liquid-card p-6 space-y-4">
                     <div class="flex justify-between items-center">
-                        <h3 class="font-bold text-[#1C1C1E] text-xs flex items-center gap-2">
+                        <h3 class="font-bold text-xs flex items-center gap-2">
                             <span class="w-6 h-6 rounded-xl bg-blue-500/10 text-[#007AFF] flex items-center justify-center text-[10px] border border-blue-500/20"><i class="fa-solid fa-scale-balanced"></i></span> 
                             Budgeting 50 / 30 / 20
                         </h3>
-                        <span class="text-[10px] font-bold px-2.5 py-0.5 bg-white/70 text-slate-500 rounded-full border border-white shadow-2xs">Keseluruhan</span>
+                        <span class="text-[10px] font-bold px-2.5 py-0.5 bg-white/20 backdrop-blur-md rounded-full border border-white/20 shadow-2xs">Keseluruhan</span>
                     </div>
 
                     <div class="space-y-1.5">
                         <div class="flex justify-between text-[11px] font-bold">
-                            <span class="text-slate-600">50% Kebutuhan (Needs)</span>
+                            <span class="opacity-80">50% Kebutuhan (Needs)</span>
                             <span id="info-needs" class="text-[#007AFF]">Rp 0 / Rp 0</span>
                         </div>
-                        <div class="w-full bg-slate-200/50 h-2 rounded-full overflow-hidden p-0.5 border border-white/50">
+                        <div class="w-full bg-black/10 h-2 rounded-full overflow-hidden p-0.5 border border-white/20">
                             <div id="bar-needs" class="bg-gradient-to-r from-blue-500 to-[#007AFF] h-full rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
                         </div>
                     </div>
 
                     <div class="space-y-1.5">
                         <div class="flex justify-between text-[11px] font-bold">
-                            <span class="text-slate-600">30% Keinginan (Wants)</span>
-                            <span id="info-wants" class="text-indigo-600">Rp 0 / Rp 0</span>
+                            <span class="opacity-80">30% Keinginan (Wants)</span>
+                            <span id="info-wants" class="text-indigo-400">Rp 0 / Rp 0</span>
                         </div>
-                        <div class="w-full bg-slate-200/50 h-2 rounded-full overflow-hidden p-0.5 border border-white/50">
+                        <div class="w-full bg-black/10 h-2 rounded-full overflow-hidden p-0.5 border border-white/20">
                             <div id="bar-wants" class="bg-gradient-to-r from-indigo-400 to-indigo-600 h-full rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
                         </div>
                     </div>
 
-                    <div class="pt-3 border-t border-white/60 flex justify-between items-center">
-                        <span class="text-[11px] font-bold text-slate-600">20% Target Tabungan (Savings)</span>
-                        <span id="info-savings" class="text-xs font-extrabold text-emerald-600">Rp 0</span>
+                    <div class="pt-3 border-t border-white/20 flex justify-between items-center">
+                        <span class="text-[11px] font-bold opacity-80">20% Target Tabungan (Savings)</span>
+                        <span id="info-savings" class="text-xs font-extrabold text-emerald-500">Rp 0</span>
                     </div>
                 </section>
             </div>
@@ -174,11 +202,11 @@
                 <!-- Grafik Analisis -->
                 <section class="ios-liquid-card p-6">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-[#1C1C1E] text-xs flex items-center gap-2">
+                        <h3 class="font-bold text-xs flex items-center gap-2">
                             <span class="w-6 h-6 rounded-xl bg-blue-500/10 text-[#007AFF] flex items-center justify-center text-[10px] border border-blue-500/20"><i class="fa-solid fa-chart-pie"></i></span> 
                             Analisis Pengeluaran
                         </h3>
-                        <span class="text-[10px] font-bold px-2.5 py-0.5 bg-white/70 text-slate-500 rounded-full border border-white shadow-2xs">Keseluruhan</span>
+                        <span class="text-[10px] font-bold px-2.5 py-0.5 bg-white/20 backdrop-blur-md rounded-full border border-white/20 shadow-2xs">Keseluruhan</span>
                     </div>
                     <div class="relative w-full h-56 sm:h-64 flex justify-center items-center">
                         <canvas id="grafikKategori"></canvas>
@@ -188,15 +216,15 @@
                 <!-- Riwayat Transaksi -->
                 <section class="ios-liquid-card p-6">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-[#1C1C1E] text-xs flex items-center gap-2">
+                        <h3 class="font-bold text-xs flex items-center gap-2">
                             <span class="w-6 h-6 rounded-xl bg-blue-500/10 text-[#007AFF] flex items-center justify-center text-[10px] border border-blue-500/20"><i class="fa-solid fa-clock-rotate-left"></i></span>
                             Riwayat Transaksi
                         </h3>
-                        <button onclick="resetSemuaData()" class="text-[11px] text-rose-600 font-bold hover:bg-rose-500/10 px-3 py-1 rounded-xl transition">Reset Semua</button>
+                        <button onclick="resetSemuaData()" class="text-[11px] text-rose-500 font-bold hover:bg-rose-500/10 px-3 py-1 rounded-xl transition">Reset Semua</button>
                     </div>
                     
                     <div id="list-transaksi" class="space-y-2.5 max-h-[520px] overflow-y-auto pr-1">
-                        <p id="empty-state" class="text-center text-slate-400 text-xs py-10">Belum ada catatan transaksi.</p>
+                        <p id="empty-state" class="text-center opacity-50 text-xs py-10">Belum ada catatan transaksi.</p>
                     </div>
                 </section>
             </div>
@@ -207,21 +235,21 @@
     <!-- Template Form HTML -->
     <template id="template-form">
         <form onsubmit="submitTransaksi(event)" class="flex flex-col gap-2.5">
-            <div class="grid grid-cols-2 gap-1.5 bg-black/5 backdrop-blur-xl p-1.5 rounded-2xl border border-white/60">
-                <button type="button" id="btn-pemasukan" onclick="setTipe('pemasukan')" class="py-2 rounded-xl text-xs font-bold text-slate-600 transition-all">Pemasukan</button>
+            <div class="grid grid-cols-2 gap-1.5 bg-black/10 backdrop-blur-xl p-1.5 rounded-2xl border border-white/20">
+                <button type="button" id="btn-pemasukan" onclick="setTipe('pemasukan')" class="py-2 rounded-xl text-xs font-bold opacity-70 transition-all">Pemasukan</button>
                 <button type="button" id="btn-pengeluaran" onclick="setTipe('pengeluaran')" class="py-2 rounded-xl text-xs font-bold bg-white text-[#007AFF] shadow-md shadow-black/5 transition-all">Pengeluaran</button>
             </div>
 
             <div class="w-full">
-                <input type="text" id="keterangan" placeholder="Keterangan (Cth: Nasi Padang)" required class="w-full px-4 py-2.5 ios-input rounded-xl focus:outline-none text-xs font-bold text-[#1C1C1E] transition placeholder:font-normal placeholder:text-slate-400">
+                <input type="text" id="keterangan" placeholder="Keterangan (Cth: Nasi Padang)" required class="w-full px-4 py-2.5 ios-input rounded-xl focus:outline-none text-xs font-bold transition placeholder:font-normal placeholder:opacity-50">
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div class="w-full">
-                    <input type="text" id="nominal" inputmode="numeric" placeholder="Nominal (Rp)" required class="w-full px-4 py-2.5 ios-input rounded-xl focus:outline-none text-xs font-bold text-[#1C1C1E] transition placeholder:font-normal placeholder:text-slate-400">
+                    <input type="text" id="nominal" inputmode="numeric" placeholder="Nominal (Rp)" required class="w-full px-4 py-2.5 ios-input rounded-xl focus:outline-none text-xs font-bold transition placeholder:font-normal placeholder:opacity-50">
                 </div>
                 <div class="w-full">
-                    <select id="kategori" class="w-full px-4 py-2.5 ios-input rounded-xl focus:outline-none text-xs font-bold text-[#1C1C1E] transition">
+                    <select id="kategori" class="w-full px-4 py-2.5 ios-input rounded-xl focus:outline-none text-xs font-bold transition">
                     </select>
                 </div>
             </div>
@@ -311,7 +339,7 @@
                 if ((tipe === 'pemasukan' && isMasuk) || (tipe === 'pengeluaran' && !isMasuk)) {
                     btn.className = "py-2 rounded-xl text-xs font-bold bg-white text-[#007AFF] shadow-md shadow-black/5 transition-all";
                 } else {
-                    btn.className = "py-2 rounded-xl text-xs font-bold text-slate-600 transition-all";
+                    btn.className = "py-2 rounded-xl text-xs font-bold opacity-70 transition-all";
                 }
             });
 
@@ -385,6 +413,8 @@
                 myChart.destroy();
             }
 
+            const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
             myChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
@@ -393,7 +423,7 @@
                         data: dataValues,
                         backgroundColor: ['#007AFF', '#5856D6', '#AF52DE', '#FF2D55', '#FF9500', '#8E8E93'],
                         borderWidth: 2,
-                        borderColor: 'rgba(255, 255, 255, 0.8)',
+                        borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.8)',
                         hoverOffset: 6
                     }]
                 },
@@ -403,7 +433,11 @@
                     plugins: {
                         legend: {
                             position: 'right',
-                            labels: { boxWidth: 10, font: { size: 11, family: 'Plus Jakarta Sans', weight: '600' }, color: '#334155' }
+                            labels: { 
+                                boxWidth: 10, 
+                                font: { size: 11, family: 'Plus Jakarta Sans', weight: '600' }, 
+                                color: isDark ? '#f8fafc' : '#334155' 
+                            }
                         }
                     }
                 }
@@ -461,7 +495,7 @@
             listEl.innerHTML = '';
 
             if (transaksiList.length === 0) {
-                listEl.innerHTML = `<p class="text-center text-slate-400 text-xs py-10">Belum ada catatan transaksi.</p>`;
+                listEl.innerHTML = `<p class="text-center opacity-50 text-xs py-10">Belum ada catatan transaksi.</p>`;
             } else {
                 transaksiList.forEach(t => {
                     if (t.tipe === 'pemasukan') totalPemasukan += t.nominal;
@@ -470,25 +504,25 @@
                     const iconClass = ikonKategori[t.kategori] || 'fa-circle';
 
                     const itemEl = document.createElement('div');
-                    itemEl.className = "flex justify-between items-center p-3.5 bg-white/50 hover:bg-white/80 rounded-2xl border border-white/70 transition-all duration-200 shadow-2xs";
+                    itemEl.className = "flex justify-between items-center p-3.5 bg-white/10 hover:bg-white/20 rounded-2xl border border-white/20 transition-all duration-200 shadow-2xs";
                     itemEl.innerHTML = `
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl flex items-center justify-center ${t.tipe === 'pemasukan' ? 'bg-emerald-500/15 text-emerald-600 border border-emerald-500/20' : 'bg-blue-500/10 text-[#007AFF] border border-blue-500/20'}">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center ${t.tipe === 'pemasukan' ? 'bg-emerald-500/15 text-emerald-500 border border-emerald-500/20' : 'bg-blue-500/10 text-[#007AFF] border border-blue-500/20'}">
                                 <i class="fa-solid ${iconClass} text-xs"></i>
                             </div>
                             <div>
-                                <p class="font-bold text-xs sm:text-sm text-[#1C1C1E]">${t.keterangan}</p>
+                                <p class="font-bold text-xs sm:text-sm">${t.keterangan}</p>
                                 <div class="flex items-center gap-2 mt-0.5">
-                                    <span class="text-[10px] bg-white/80 px-2 py-0.5 rounded-md text-slate-500 font-bold border border-slate-200/50">${t.kategori}</span>
-                                    <span class="text-[10px] text-slate-400 font-semibold">${t.tanggal}</span>
+                                    <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-md opacity-80 font-bold border border-white/10">${t.kategori}</span>
+                                    <span class="text-[10px] opacity-50 font-semibold">${t.tanggal}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="text-right flex items-center gap-3">
-                            <span class="font-extrabold text-xs sm:text-sm ${t.tipe === 'pemasukan' ? 'text-emerald-600' : 'text-rose-600'}">
+                            <span class="font-extrabold text-xs sm:text-sm ${t.tipe === 'pemasukan' ? 'text-emerald-500' : 'text-rose-500'}">
                                 ${t.tipe === 'pemasukan' ? '+' : '-'} ${formatRupiah(t.nominal)}
                             </span>
-                            <button onclick="hapusTransaksi(${t.id})" class="text-slate-300 hover:text-rose-500 transition text-xs p-1.5"><i class="fa-solid fa-trash-can"></i></button>
+                            <button onclick="hapusTransaksi(${t.id})" class="opacity-40 hover:opacity-100 hover:text-rose-500 transition text-xs p-1.5"><i class="fa-solid fa-trash-can"></i></button>
                         </div>
                     `;
                     listEl.appendChild(itemEl);
