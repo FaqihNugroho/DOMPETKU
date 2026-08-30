@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOMPETKU (Online Shared)</title>
+    <title>DOMPETKU</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome Icon -->
@@ -105,8 +105,8 @@
                     <i class="fa-solid fa-wallet"></i>
                 </div>
                 <div>
-                    <h1 class="text-base font-bold tracking-tight">DOMPETKU</h1>
-                    <p class="text-xs text-[var(--text-muted)]">Keuangan Bersama</p>
+                    <h1 class="text-base font-bold tracking-tight">DOMPET KITA</h1>
+                    <p class="text-xs text-[var(--text-muted)]">Allahumma sholli 'ala sayyidina Muhammad sukses dan kaya</p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
@@ -160,7 +160,7 @@
                 <section class="ios-card p-5 space-y-3.5">
                     <div class="flex justify-between items-center">
                         <h3 class="font-bold text-xs flex items-center gap-2">
-                            <i class="fa-solid fa-chart-pie text-[#5856D6]"></i> Budgeting 50/30/20
+                            <i class="fa-solid fa-chart-pie text-[#5856D6]"></i> Budgeting
                         </h3>
                     </div>
                     <div class="space-y-1">
@@ -249,7 +249,7 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" id="btn-simpan" class="w-full bg-[#007AFF] text-white font-bold py-2.5 rounded-xl shadow-md shadow-blue-500/20 hover:opacity-90 transition text-xs mt-1 cursor-pointer">Simpan ke Cloud</button>
+            <button type="submit" id="btn-simpan" class="w-full bg-[#007AFF] text-white font-bold py-2.5 rounded-xl shadow-md shadow-blue-500/20 hover:opacity-90 transition text-xs mt-1 cursor-pointer">SIMPAN</button>
         </form>
     </template>
 
@@ -407,7 +407,7 @@
                 transaksiList = data || [];
                 renderAplikasi();
                 
-                statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online (Sinkron)`;
+                statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online`;
                 statusEl.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 flex items-center gap-1.5";
             } catch (err) {
                 console.error("Gagal memuat:", err.message);
