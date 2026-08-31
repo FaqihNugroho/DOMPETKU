@@ -210,9 +210,17 @@
                         <!-- Pilihan Filter Bulan -->
                         <div class="flex items-center gap-2 w-full sm:w-auto">
                             <label class="text-[11px] font-bold text-[var(--text-muted)] whitespace-nowrap">Pilih Bulan:</label>
-                            <select id="filter-bulan" onchange="gantiFilterBulan()" class="ios-input px-3 py-1.5 text-xs font-bold cursor-pointer w-full sm:w-40">
+                            <select id="filter-bulan" onchange="renderAplikasi()" class="ios-input px-3 py-1.5 text-xs font-bold cursor-pointer w-full sm:w-40">
                             </select>
                         </div>
+                    </div>
+
+                    <!-- Kolom Pencarian Transaksi -->
+                    <div class="relative mb-3">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-[var(--text-muted)] text-xs">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        <input type="text" id="input-pencarian" oninput="renderAplikasi()" placeholder="Cari keterangan transaksi (cth: Sunlight, Gaji)..." class="w-full pl-9 pr-3.5 py-2 ios-input text-xs font-medium">
                     </div>
 
                     <!-- Tombol Pilih Tampilan Riwayat -->
@@ -402,11 +410,10 @@
             });
         }
 
-        // Pemetaan Icon Kategori (Termasuk Kebutuhan Rumah Tangga)
         const ikonKategori = {
             'Gaji': 'fa-sack-dollar',
             'Makanan/Minuman': 'fa-utensils',
-            'Kebutuhan Rumah Tangga': 'fa-house-chimney', // Icon baru untuk Sunlight/Sabun
+            'Kebutuhan Rumah Tangga': 'fa-house-chimney',
             'Tagihan': 'fa-bolt',
             'Transport': 'fa-car',
             'Belanja': 'fa-bag-shopping',
@@ -421,7 +428,7 @@
             ],
             pengeluaran: [
                 { value: 'Makanan/Minuman', label: 'Makanan & Minuman (Needs)' },
-                { value: 'Kebutuhan Rumah Tangga', label: 'Kebutuhan Rumah Tangga / Sabun (Needs)' }, // Kategori Baru
+                { value: 'Kebutuhan Rumah Tangga', label: 'Kebutuhan Rumah Tangga / Sabun (Needs)' },
                 { value: 'Tagihan', label: 'Tagihan & Utilitas (Needs)' },
                 { value: 'Transport', label: 'Transportasi (Needs)' },
                 { value: 'Belanja', label: 'Belanja & Barang (Wants)' },
@@ -477,10 +484,6 @@
             }
         }
 
-        function gantiFilterBulan() {
-            renderAplikasi();
-        }
-
         async function ambilDataCloud() {
             const statusEl = document.getElementById('sync-status');
             try {
@@ -527,7 +530,7 @@
             };
 
             try {
-                const { error } = await _supabase.from('transaksi').insert([transaksiBaru]);
+                const { error } = await _supabase.from('transaksi')->insert([transaksiBaru]);
                 if (error) throw error;
 
                 document.querySelectorAll('#keterangan').forEach(i => i.value = '');
@@ -608,7 +611,6 @@
 
         function updateBudgeting503020(totalPemasukan, transaksiBulanIni) {
             let totalNeeds = 0, totalWants = 0;
-            // Kategori yang dihitung masuk ke kelompok Needs (Termasuk Kebutuhan Rumah Tangga)
             const needsCat = ['Makanan/Minuman', 'Kebutuhan Rumah Tangga', 'Tagihan', 'Transport'];
 
             transaksiBulanIni.filter(t => t.tipe === 'pengeluaran').forEach(t => {
@@ -637,15 +639,28 @@
         function renderAplikasi() {
             const bulanFilterEl = document.getElementById('filter-bulan');
             const bulanAktif = bulanFilterEl ? bulanFilterEl.value : namaBulanList[new Date().getMonth()];
+            const kataKunci = document.getElementById('input-pencarian') ? document.getElementById('input-pencarian').value.toLowerCase() : '';
 
             document.getElementById('label-saldo-title').innerText = `Saldo Bulan ${bulanAktif}`;
 
+            // Data khusus bulan aktif (untuk saldo, grafik, dan budgeting)
             const transaksiBulanIni = transaksiList.filter(t => {
                 if (!t.tanggal) return false;
                 return t.tanggal.includes(bulanAktif);
             });
 
             let totalPemasukan = 0, totalPengeluaran = 0;
+            transaksiBulanIni.forEach(t => {
+                if (t.tipe === 'pemasukan') totalPemasukan += t.nominal;
+                else totalPengeluaran += t.nominal;
+            });
+
+            // Data untuk ditampilkan di list riwayat (difilter lagi berdasarkan pencarian kata kunci)
+            const transaksiDitampilkan = transaksiBulanIni.filter(t => {
+                if (!kataKunci) return true;
+                return t.keterangan.toLowerCase().includes(kataKunci) || t.kategori.toLowerCase().includes(kataKunci);
+            });
+
             const listPengeluaranEl = document.getElementById('list-pengeluaran');
             const listPemasukanEl = document.getElementById('list-pemasukan');
             
@@ -655,16 +670,16 @@
             let countKeluar = 0;
             let countMasuk = 0;
 
-            if (transaksiBulanIni.length === 0) {
-                listPengeluaranEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada pengeluaran di bulan ${bulanAktif}.</p>`;
-                listPemasukanEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada pemasukan di bulan ${bulanAktif}.</p>`;
+            if (transaksiDitampilkan.length === 0) {
+                const pesanKosong = kataKunci ? `Tidak ditemukan transaksi dengan kata "${kataKunci}".` : `Belum ada transaksi di bulan ${bulanAktif}.`;
+                listPengeluaranEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">${pesanKosong}</p>`;
+                listPemasukanEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">${pesanKosong}</p>`;
             } else {
-                transaksiBulanIni.forEach(t => {
+                transaksiDitampilkan.forEach(t => {
                     const itemEl = document.createElement('div');
                     itemEl.className = "flex justify-between items-center p-3 ios-inner-box rounded-xl transition";
 
                     if (t.tipe === 'pemasukan') {
-                        totalPemasukan += t.nominal;
                         countMasuk++;
                         itemEl.innerHTML = `
                             <div class="flex items-center gap-2.5">
@@ -685,7 +700,6 @@
                         `;
                         listPemasukanEl.appendChild(itemEl);
                     } else {
-                        totalPengeluaran += t.nominal;
                         countKeluar++;
                         itemEl.innerHTML = `
                             <div class="flex items-center gap-2.5">
@@ -709,10 +723,10 @@
                 });
 
                 if (countKeluar === 0) {
-                    listPengeluaranEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada pengeluaran di bulan ${bulanAktif}.</p>`;
+                    listPengeluaranEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Tidak ada pengeluaran yang cocok dengan pencarian.</p>`;
                 }
                 if (countMasuk === 0) {
-                    listPemasukanEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Belum ada pemasukan di bulan ${bulanAktif}.</p>`;
+                    listPemasukanEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Tidak ada pemasukan yang cocok dengan pencarian.</p>`;
                 }
             }
 
