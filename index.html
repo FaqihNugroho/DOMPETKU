@@ -16,10 +16,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-body: #F2F2F7;
+            --bg-body: #0066AE;
             --text-main: #000000;
-            --text-muted: #6C6C70;
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-muted: #4A5568;
+            --card-bg: rgba(255, 255, 255, 0.95);
             --card-border: rgba(60, 60, 67, 0.18);
             --input-bg: rgba(118, 118, 128, 0.08);
             --input-border: rgba(60, 60, 67, 0.15);
@@ -105,14 +105,14 @@
                     <i class="fa-solid fa-wallet" data-source-id="1"></i>
                 </div>
                 <div data-source-id="1">
-                    <h1 class="text-base font-bold tracking-tight" data-source-id="1">DOMPET KITA</h1>
-                    <p class="text-xs text-[var(--text-muted)]" data-source-id="1">Keuangan Bersama</p>
+                    <h1 class="text-base font-bold tracking-tight text-white" data-source-id="1">DOMPET KITA</h1>
+                    <p class="text-xs text-blue-100" data-source-id="1">Keuangan Bersama</p>
                 </div>
             </div>
             <div class="flex items-center gap-2" data-source-id="1">
                 <!-- Status Koneksi Realtime -->
-                <span id="sync-status" class="text-[10px] px-2.5 py-1 rounded-full font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20 flex items-center gap-1.5" data-source-id="1">
-                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" data-source-id="1"></span> Menghubungkan...
+                <span id="sync-status" class="text-[10px] px-2.5 py-1 rounded-full font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20 flex items-center gap-1.5" data-source-id="1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" data-source-id="1"></span> Menghubungkan...
                 </span>
                 <!-- Tombol Toggle Tema -->
                 <button onclick="toggleDarkMode()" id="theme-toggle" class="w-10 h-10 rounded-2xl ios-card flex items-center justify-center text-sm text-[var(--text-main)] hover:opacity-80 transition cursor-pointer" title="Ubah Tema" data-source-id="1">
@@ -532,12 +532,12 @@
                 setupFilterBulan();
                 renderAplikasi();
                 
-                statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online`;
-                statusEl.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 flex items-center gap-1.5";
+                statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Online`;
+                statusEl.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 flex items-center gap-1.5";
             } catch (err) {
                 console.error("Gagal memuat:", err.message);
-                statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Error Koneksi`;
-                statusEl.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-rose-500/10 text-rose-500 border border-rose-500/20 flex items-center gap-1.5";
+                statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span> Error Koneksi`;
+                statusEl.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-rose-500/10 text-rose-300 border border-rose-500/20 flex items-center gap-1.5";
             }
         }
 
@@ -791,7 +791,6 @@
             transaksiBulanIni.forEach(t => {
                 if (t.tipe === 'pemasukan') totalSemuaMasuk += t.nominal;
                 else if (t.tipe === 'pengeluaran') totalSemuaKeluar += t.nominal;
-                // Catatan: transaksi dengan tipe 'tabungan' bisa disesuaikan jika ingin memotong saldo utama, namun saat ini dibiarkan berdiri sendiri atau dicatat sebagai alokasi terpisah.
             });
 
             document.getElementById('total-pemasukan').innerText = formatRupiah(totalSemuaMasuk);
