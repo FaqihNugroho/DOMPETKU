@@ -215,7 +215,7 @@
                         </div>
                     </div>
 
-                    <!-- Input Pencarian (Fitur Tambahan) -->
+                    <!-- Input Pencarian -->
                     <div class="mb-4">
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-[var(--text-muted)]">
@@ -226,9 +226,10 @@
                     </div>
 
                     <!-- Tombol Pilih Tampilan Riwayat -->
-                    <div class="grid grid-cols-2 gap-1 ios-inner-box p-1 rounded-xl mb-4" data-source-id="1">
-                        <button type="button" id="tab-btn-keluar" onclick="gantiTabRiwayat('pengeluaran')" class="py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer" data-source-id="1">Pengeluaran</button>
-                        <button type="button" id="tab-btn-masuk" onclick="gantiTabRiwayat('pemasukan')" class="py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition cursor-pointer" data-source-id="1">Pemasukan</button>
+                    <div class="grid grid-cols-3 gap-1 ios-inner-box p-1 rounded-xl mb-4">
+                        <button type="button" id="tab-btn-keluar" onclick="gantiTabRiwayat('pengeluaran')" class="py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer">Pengeluaran</button>
+                        <button type="button" id="tab-btn-masuk" onclick="gantiTabRiwayat('pemasukan')" class="py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition cursor-pointer">Pemasukan</button>
+                        <button type="button" id="tab-btn-tabungan" onclick="gantiTabRiwayat('tabungan')" class="py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition cursor-pointer">Tabungan</button>
                     </div>
 
                     <!-- Daftar Riwayat Pengeluaran -->
@@ -240,6 +241,11 @@
                     <div id="list-pemasukan" class="space-y-2 max-h-[380px] overflow-y-auto pr-1 hidden" data-source-id="1">
                         <p class="text-center text-[var(--text-muted)] text-xs py-8" data-source-id="1">Memuat data...</p>
                     </div>
+
+                    <!-- Daftar Riwayat Tabungan (Fitur Tambahan) -->
+                    <div id="list-tabungan" class="space-y-2 max-h-[380px] overflow-y-auto pr-1 hidden">
+                        <p class="text-center text-[var(--text-muted)] text-xs py-8">Memuat data...</p>
+                    </div>
                 </section>
             </div>
 
@@ -249,12 +255,13 @@
     <!-- Template Form -->
     <template id="template-form" data-source-id="1">
         <form onsubmit="submitTransaksi(event)" class="flex flex-col gap-2.5" data-source-id="1">
-            <div class="grid grid-cols-2 gap-1 ios-inner-box p-1 rounded-xl" data-source-id="1">
-                <button type="button" id="btn-pemasukan" onclick="setTipe('pemasukan')" class="py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition cursor-pointer" data-source-id="1">Masuk</button>
-                <button type="button" id="btn-pengeluaran" onclick="setTipe('pengeluaran')" class="py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer" data-source-id="1">Keluar</button>
+            <div class="grid grid-cols-3 gap-1 ios-inner-box p-1 rounded-xl">
+                <button type="button" id="btn-pemasukan" onclick="setTipe('pemasukan')" class="py-1.5 rounded-lg text-[11px] font-bold text-[var(--text-muted)] transition cursor-pointer">Masuk</button>
+                <button type="button" id="btn-pengeluaran" onclick="setTipe('pengeluaran')" class="py-1.5 rounded-lg text-[11px] font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer">Keluar</button>
+                <button type="button" id="btn-tabungan" onclick="setTipe('tabungan')" class="py-1.5 rounded-lg text-[11px] font-bold text-[var(--text-muted)] transition cursor-pointer">Tabungan</button>
             </div>
             <div data-source-id="1">
-                <input type="text" id="keterangan" placeholder="Keterangan (Cth: Beli Sunlight & Sabun)" required class="w-full px-3.5 py-2 ios-input text-xs font-medium" data-source-id="1">
+                <input type="text" id="keterangan" placeholder="Keterangan (Cth: Nabung Darurat / Ambil Tabungan)" required class="w-full px-3.5 py-2 ios-input text-xs font-medium" data-source-id="1">
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" data-source-id="1">
                 <div data-source-id="1">
@@ -412,15 +419,17 @@
             });
         }
 
-        // Pemetaan Icon Kategori (Termasuk Kebutuhan Rumah Tangga)
+        // Pemetaan Icon Kategori
         const ikonKategori = {
             'Gaji': 'fa-sack-dollar',
             'Makanan/Minuman': 'fa-utensils',
-            'Kebutuhan Rumah Tangga': 'fa-house-chimney', // Icon baru untuk Sunlight/Sabun
+            'Kebutuhan Rumah Tangga': 'fa-house-chimney',
             'Tagihan': 'fa-bolt',
             'Transport': 'fa-car',
             'Belanja': 'fa-bag-shopping',
             'Hiburan': 'fa-gamepad',
+            'Tabungan Masuk': 'fa-piggy-bank',
+            'Ambil Tabungan': 'fa-hand-holding-dollar',
             'Lainnya': 'fa-box-archive'
         };
 
@@ -431,12 +440,16 @@
             ],
             pengeluaran: [
                 { value: 'Makanan/Minuman', label: 'Makanan & Minuman (Needs)' },
-                { value: 'Kebutuhan Rumah Tangga', label: 'Kebutuhan Rumah Tangga / Sabun (Needs)' }, // Kategori Baru
+                { value: 'Kebutuhan Rumah Tangga', label: 'Kebutuhan Rumah Tangga / Sabun (Needs)' },
                 { value: 'Tagihan', label: 'Tagihan & Utilitas (Needs)' },
                 { value: 'Transport', label: 'Transportasi (Needs)' },
                 { value: 'Belanja', label: 'Belanja & Barang (Wants)' },
                 { value: 'Hiburan', label: 'Hiburan & Lifestyle (Wants)' },
                 { value: 'Lainnya', label: 'Pengeluaran Lainnya (Wants)' }
+            ],
+            tabungan: [
+                { value: 'Tabungan Masuk', label: 'Tambah Saldo Tabungan' },
+                { value: 'Ambil Tabungan', label: 'Ambil / Tarik Tabungan' }
             ]
         };
 
@@ -456,13 +469,18 @@
             tipeAktif = tipe;
             const btnMasuk = document.getElementById('btn-pemasukan');
             const btnKeluar = document.getElementById('btn-pengeluaran');
+            const btnTabungan = document.getElementById('btn-tabungan');
+
+            btnMasuk.className = "py-1.5 rounded-lg text-[11px] font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
+            btnKeluar.className = "py-1.5 rounded-lg text-[11px] font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
+            btnTabungan.className = "py-1.5 rounded-lg text-[11px] font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
 
             if (tipe === 'pemasukan') {
-                btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold bg-[#34C759] text-white shadow-sm transition cursor-pointer";
-                btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
-            } else {
-                btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer";
-                btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
+                btnMasuk.className = "py-1.5 rounded-lg text-[11px] font-bold bg-[#34C759] text-white shadow-sm transition cursor-pointer";
+            } else if (tipe === 'pengeluaran') {
+                btnKeluar.className = "py-1.5 rounded-lg text-[11px] font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer";
+            } else if (tipe === 'tabungan') {
+                btnTabungan.className = "py-1.5 rounded-lg text-[11px] font-bold bg-[#FF9500] text-white shadow-sm transition cursor-pointer";
             }
             updatePilihanKategori();
         }
@@ -471,19 +489,28 @@
             tabRiwayatAktif = tab;
             const btnKeluar = document.getElementById('tab-btn-keluar');
             const btnMasuk = document.getElementById('tab-btn-masuk');
+            const btnTabungan = document.getElementById('tab-btn-tabungan');
             const listKeluar = document.getElementById('list-pengeluaran');
             const listMasuk = document.getElementById('list-pemasukan');
+            const listTabungan = document.getElementById('list-tabungan');
+
+            btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
+            btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
+            btnTabungan.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
+            
+            listKeluar.classList.add('hidden');
+            listMasuk.classList.add('hidden');
+            listTabungan.classList.add('hidden');
 
             if (tab === 'pengeluaran') {
                 btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer";
-                btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
                 listKeluar.classList.remove('hidden');
-                listMasuk.classList.add('hidden');
-            } else {
+            } else if (tab === 'pemasukan') {
                 btnMasuk.className = "py-1.5 rounded-lg text-xs font-bold bg-[#34C759] text-white shadow-sm transition cursor-pointer";
-                btnKeluar.className = "py-1.5 rounded-lg text-xs font-bold text-[var(--text-muted)] transition bg-transparent cursor-pointer";
                 listMasuk.classList.remove('hidden');
-                listKeluar.classList.add('hidden');
+            } else if (tab === 'tabungan') {
+                btnTabungan.className = "py-1.5 rounded-lg text-xs font-bold bg-[#FF9500] text-white shadow-sm transition cursor-pointer";
+                listTabungan.classList.remove('hidden');
             }
         }
 
@@ -618,7 +645,6 @@
 
         function updateBudgeting503020(totalPemasukan, transaksiBulanIni) {
             let totalNeeds = 0, totalWants = 0;
-            // Kategori yang dihitung masuk ke kelompok Needs (Termasuk Kebutuhan Rumah Tangga)
             const needsCat = ['Makanan/Minuman', 'Kebutuhan Rumah Tangga', 'Tagihan', 'Transport'];
 
             transaksiBulanIni.filter(t => t.tipe === 'pengeluaran').forEach(t => {
@@ -655,7 +681,6 @@
                 return t.tanggal.includes(bulanAktif);
             });
 
-            // Filter tambahan berdasarkan input pencarian
             const keywordPencarian = document.getElementById('input-pencarian') ? document.getElementById('input-pencarian').value.toLowerCase() : '';
             const transaksiTersaring = transaksiBulanIni.filter(t => {
                 const ket = t.keterangan ? t.keterangan.toLowerCase() : '';
@@ -666,16 +691,20 @@
             let totalPemasukan = 0, totalPengeluaran = 0;
             const listPengeluaranEl = document.getElementById('list-pengeluaran');
             const listPemasukanEl = document.getElementById('list-pemasukan');
+            const listTabunganEl = document.getElementById('list-tabungan');
             
             listPengeluaranEl.innerHTML = '';
             listPemasukanEl.innerHTML = '';
+            listTabunganEl.innerHTML = '';
 
             let countKeluar = 0;
             let countMasuk = 0;
+            let countTabungan = 0;
 
             if (transaksiTersaring.length === 0) {
                 listPengeluaranEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Tidak ada pengeluaran yang cocok.</p>`;
                 listPemasukanEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Tidak ada pemasukan yang cocok.</p>`;
+                listTabunganEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Tidak ada data tabungan yang cocok.</p>`;
             } else {
                 transaksiTersaring.forEach(t => {
                     const itemEl = document.createElement('div');
@@ -702,7 +731,7 @@
                             </div>
                         `;
                         listPemasukanEl.appendChild(itemEl);
-                    } else {
+                    } else if (t.tipe === 'pengeluaran') {
                         totalPengeluaran += t.nominal;
                         countKeluar++;
                         itemEl.innerHTML = `
@@ -723,6 +752,27 @@
                             </div>
                         `;
                         listPengeluaranEl.appendChild(itemEl);
+                    } else if (t.tipe === 'tabungan') {
+                        countTabungan++;
+                        const isMasukTabungan = t.kategori === 'Tabungan Masuk';
+                        itemEl.innerHTML = `
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#FF9500]/15 text-[#FF9500]">
+                                    <i class="fa-solid ${ikonKategori[t.kategori] || 'fa-circle'} text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-xs">${t.keterangan}</p>
+                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • <span class="text-[#007AFF] font-bold">${t.tanggal}</span></p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="font-bold text-xs ${isMasukTabungan ? 'text-[#34C759]' : 'text-[#FF3B30]'}">
+                                    ${isMasukTabungan ? '+' : '-'} ${formatRupiah(t.nominal)}
+                                </span>
+                                <button onclick="hapusTransaksi(${t.id})" class="text-[var(--text-muted)] hover:text-[#FF3B30] text-xs cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        `;
+                        listTabunganEl.appendChild(itemEl);
                     }
                 });
 
@@ -732,13 +782,16 @@
                 if (countMasuk === 0) {
                     listPemasukanEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Tidak ada pemasukan yang cocok.</p>`;
                 }
+                if (countTabungan === 0) {
+                    listTabunganEl.innerHTML = `<p class="text-center text-[var(--text-muted)] text-xs py-8">Tidak ada data tabungan yang cocok.</p>`;
+                }
             }
 
-            // Total saldo, pemasukan, pengeluaran, dan grafik tetap menghitung keseluruhan transaksi bulan tersebut (tidak terpengaruh filter pencarian teks agar akurat)
             let totalSemuaMasuk = 0, totalSemuaKeluar = 0;
             transaksiBulanIni.forEach(t => {
                 if (t.tipe === 'pemasukan') totalSemuaMasuk += t.nominal;
-                else totalSemuaKeluar += t.nominal;
+                else if (t.tipe === 'pengeluaran') totalSemuaKeluar += t.nominal;
+                // Catatan: transaksi dengan tipe 'tabungan' bisa disesuaikan jika ingin memotong saldo utama, namun saat ini dibiarkan berdiri sendiri atau dicatat sebagai alokasi terpisah.
             });
 
             document.getElementById('total-pemasukan').innerText = formatRupiah(totalSemuaMasuk);
