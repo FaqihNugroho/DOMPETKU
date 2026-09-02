@@ -27,18 +27,6 @@
             --inner-box-border: rgba(60, 60, 67, 0.1);
         }
 
-        html.dark {
-            --bg-body: #000000;
-            --text-main: #F8FAFC;
-            --text-muted: #A1A1AA;
-            --card-bg: #1E1E22;
-            --card-border: rgba(255, 255, 255, 0.18);
-            --input-bg: #2A2A2E;
-            --input-border: rgba(255, 255, 255, 0.15);
-            --inner-box-bg: #252529;
-            --inner-box-border: rgba(255, 255, 255, 0.1);
-        }
-
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-body) !important;
@@ -46,7 +34,6 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .ios-card {
@@ -126,10 +113,6 @@
                 <span id="sync-status" class="text-[10px] px-3 py-1.5 rounded-full font-bold bg-amber-500/20 text-amber-200 border border-amber-500/30 flex items-center gap-1.5 backdrop-blur-md">
                     <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Menghubungkan...
                 </span>
-                <!-- Tombol Toggle Tema -->
-                <button onclick="toggleDarkMode()" id="theme-toggle" class="w-11 h-11 rounded-2xl ios-card flex items-center justify-center text-sm text-[var(--text-main)] hover:opacity-80 transition cursor-pointer shadow-md" title="Ubah Tema">
-                    <i id="theme-icon" class="fa-solid fa-moon"></i>
-                </button>
             </div>
         </header>
 
@@ -371,33 +354,6 @@
             } else if (menu === 'grafik') {
                 elGrafik.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-        }
-
-        function initTheme() {
-            const savedTheme = localStorage.getItem('dompetku_theme');
-            const iconEl = document.getElementById('theme-icon');
-            if (savedTheme === 'dark') {
-                document.documentElement.classList.add('dark');
-                iconEl.className = "fa-solid fa-sun";
-            } else {
-                document.documentElement.classList.remove('dark');
-                iconEl.className = "fa-solid fa-moon";
-            }
-        }
-
-        function toggleDarkMode() {
-            const htmlEl = document.documentElement;
-            const iconEl = document.getElementById('theme-icon');
-            if (htmlEl.classList.contains('dark')) {
-                htmlEl.classList.remove('dark');
-                localStorage.setItem('dompetku_theme', 'light');
-                iconEl.className = "fa-solid fa-moon";
-            } else {
-                htmlEl.classList.add('dark');
-                localStorage.setItem('dompetku_theme', 'dark');
-                iconEl.className = "fa-solid fa-sun";
-            }
-            if (myChart) updateGrafik();
         }
 
         let tipeAktif = 'pengeluaran';
@@ -671,8 +627,6 @@
 
             if (myChart) myChart.destroy();
 
-            const isDark = document.documentElement.classList.contains('dark');
-
             myChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
@@ -681,7 +635,7 @@
                         data: Object.values(dataKategori),
                         backgroundColor: ['#003D73', '#34C759', '#FF9500', '#FFCC00', '#FF3B30', '#5856D6', '#8E8E93'],
                         borderWidth: 2,
-                        borderColor: isDark ? '#1E1E22' : '#FFFFFF',
+                        borderColor: '#FFFFFF',
                         hoverOffset: 4
                     }]
                 },
@@ -694,7 +648,7 @@
                             labels: {
                                 boxWidth: 8,
                                 font: { size: 10, family: 'Plus Jakarta Sans', weight: '600' },
-                                color: isDark ? '#A1A1AA' : '#8E8E93'
+                                color: '#8E8E93'
                             }
                         }
                     }
@@ -869,7 +823,6 @@
                 .subscribe();
         }
 
-        initTheme();
         initForm();
         setTipe('pengeluaran');
         ambilDataCloud();
