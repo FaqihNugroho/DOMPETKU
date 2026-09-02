@@ -84,6 +84,14 @@
             border: 1px solid var(--inner-box-border);
         }
 
+        /* Styling Navigasi Bawah ala Mobile Modern */
+        .bottom-nav {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--card-border);
+        }
+
         ::-webkit-scrollbar {
             width: 4px;
         }
@@ -93,10 +101,10 @@
         }
     </style>
 </head>
-<body class="pb-12">
+<body class="pb-28">
 
     <!-- Wrapper Utama -->
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-8">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-6">
 
         <!-- Header -->
         <header class="flex justify-between items-center mb-6">
@@ -106,7 +114,7 @@
                 </div>
                 <div>
                     <h1 class="text-base font-bold tracking-tight text-white">DOMPET KITA</h1>
-                    <p class="text-xs text-blue-100">m-BCA Style Interface</p>
+                    <p class="text-xs text-blue-100">Modern Banking Interface</p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
@@ -120,34 +128,6 @@
                 </button>
             </div>
         </header>
-
-        <!-- Menu Navigasi Kotak Grid ala m-BCA -->
-        <div class="grid grid-cols-4 gap-3 mb-6">
-            <div onclick="pilihMenuBCA('info')" class="ios-card p-3 text-center cursor-pointer hover:scale-105 transition flex flex-col items-center justify-center">
-                <div class="w-9 h-9 rounded-xl bg-blue-500/15 text-[#007AFF] flex items-center justify-center mb-1.5 text-sm">
-                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                </div>
-                <span class="text-[11px] font-bold text-[var(--text-main)]">m-Info</span>
-            </div>
-            <div onclick="pilihMenuBCA('transaksi')" class="ios-card p-3 text-center cursor-pointer hover:scale-105 transition flex flex-col items-center justify-center">
-                <div class="w-9 h-9 rounded-xl bg-emerald-500/15 text-[#34C759] flex items-center justify-center mb-1.5 text-sm">
-                    <i class="fa-solid fa-circle-plus"></i>
-                </div>
-                <span class="text-[11px] font-bold text-[var(--text-main)]">m-Input</span>
-            </div>
-            <div onclick="pilihMenuBCA('budget')" class="ios-card p-3 text-center cursor-pointer hover:scale-105 transition flex flex-col items-center justify-center">
-                <div class="w-9 h-9 rounded-xl bg-purple-500/15 text-[#5856D6] flex items-center justify-center mb-1.5 text-sm">
-                    <i class="fa-solid fa-chart-pie"></i>
-                </div>
-                <span class="text-[11px] font-bold text-[var(--text-main)]">Budget 50%</span>
-            </div>
-            <div onclick="pilihMenuBCA('grafik')" class="ios-card p-3 text-center cursor-pointer hover:scale-105 transition flex flex-col items-center justify-center">
-                <div class="w-9 h-9 rounded-xl bg-amber-500/15 text-[#FF9500] flex items-center justify-center mb-1.5 text-sm">
-                    <i class="fa-solid fa-chart-line"></i>
-                </div>
-                <span class="text-[11px] font-bold text-[var(--text-main)]">m-Admin</span>
-            </div>
-        </div>
 
         <!-- Layout Utama -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -277,6 +257,36 @@
                 </section>
             </div>
 
+        </div>
+    </div>
+
+    <!-- Navigasi Bawah (Bottom Navigation Bar ala Mobile App Modern) -->
+    <div class="fixed bottom-0 left-0 right-0 bottom-nav shadow-lg z-50 px-4 py-2">
+        <div class="max-w-md mx-auto grid grid-cols-4 gap-1 text-center">
+            <button onclick="pilihMenuBCA('info')" class="p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition flex flex-col items-center justify-center cursor-pointer">
+                <div class="text-[#007AFF] mb-1 text-sm">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                </div>
+                <span class="text-[10px] font-bold text-[var(--text-main)]">m-Info</span>
+            </button>
+            <button onclick="pilihMenuBCA('transaksi')" class="p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition flex flex-col items-center justify-center cursor-pointer">
+                <div class="text-[#34C759] mb-1 text-sm">
+                    <i class="fa-solid fa-circle-plus"></i>
+                </div>
+                <span class="text-[10px] font-bold text-[var(--text-main)]">m-Input</span>
+            </button>
+            <button onclick="pilihMenuBCA('budget')" class="p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition flex flex-col items-center justify-center cursor-pointer">
+                <div class="text-[#5856D6] mb-1 text-sm">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <span class="text-[10px] font-bold text-[var(--text-main)]">Budget</span>
+            </button>
+            <button onclick="pilihMenuBCA('grafik')" class="p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition flex flex-col items-center justify-center cursor-pointer">
+                <div class="text-[#FF9500] mb-1 text-sm">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <span class="text-[10px] font-bold text-[var(--text-main)]">Analisis</span>
+            </button>
         </div>
     </div>
 
