@@ -54,15 +54,15 @@
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--card-border) !important;
-            border-radius: 2rem; /* Lebih rounded */
+            border-radius: 2rem;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
             transition: all 0.3s ease;
         }
 
         .ios-hero-card {
-            background: linear-gradient(135deg, #0A84FF 0%, #0056B3 100%);
-            border-radius: 2rem; /* Lebih rounded */
-            box-shadow: 0 12px 30px rgba(0, 122, 255, 0.4);
+            background: linear-gradient(135deg, #004080 0%, #002244 100%);
+            border-radius: 2rem;
+            box-shadow: 0 12px 30px rgba(0, 34, 68, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
@@ -70,12 +70,12 @@
             background-color: var(--input-bg) !important;
             border: 1px solid var(--input-border) !important;
             color: var(--text-main) !important;
-            border-radius: 1rem; /* Lebih rounded */
+            border-radius: 1rem;
             transition: all 0.2s ease;
         }
         .ios-input:focus {
-            border-color: #0A84FF !important;
-            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
+            border-color: #003D73 !important;
+            box-shadow: 0 0 0 3px rgba(0, 61, 115, 0.3);
             outline: none;
         }
 
@@ -85,15 +85,15 @@
             border-radius: 1rem;
         }
 
-        /* Navigasi Bawah dengan Nuansa Biru Kontras & Rounded Ekstra */
+        /* Navigasi Bawah dengan Nuansa Biru Lebih Gelap (Navy) & Rounded Ekstra */
         .bottom-nav {
-            background-color: rgba(10, 132, 255, 0.95); /* Biru Cerah Kontras (#0A84FF) */
+            background-color: rgba(0, 52, 99, 0.95); /* Biru Navy Gelap (#003463) */
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             border-top-left-radius: 2rem;
             border-top-right-radius: 2rem;
-            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.4);
         }
 
         ::-webkit-scrollbar {
@@ -113,7 +113,7 @@
         <!-- Header -->
         <header class="flex justify-between items-center mb-6">
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-2xl bg-[#0A84FF] flex items-center justify-center text-white shadow-lg shadow-blue-500/30 text-sm">
+                <div class="w-11 h-11 rounded-2xl bg-[#003D73] flex items-center justify-center text-white shadow-lg shadow-black/30 text-sm">
                     <i class="fa-solid fa-wallet"></i>
                 </div>
                 <div>
@@ -163,7 +163,7 @@
                 <!-- Form Input -->
                 <section id="section-form" class="ios-card p-5">
                     <h3 class="font-bold text-xs mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-plus text-[#0A84FF]"></i> Catat Transaksi Baru
+                        <i class="fa-solid fa-circle-plus text-[#003D73]"></i> Catat Transaksi Baru
                     </h3>
                     <div id="form-container"></div>
                 </section>
@@ -178,10 +178,10 @@
                     <div class="space-y-1">
                         <div class="flex justify-between text-[11px] font-semibold">
                             <span class="text-[var(--text-muted)]">50% Kebutuhan</span>
-                            <span id="info-needs" class="text-[#0A84FF]">Rp 0 / Rp 0</span>
+                            <span id="info-needs" class="text-[#003D73]">Rp 0 / Rp 0</span>
                         </div>
                         <div class="w-full ios-inner-box h-2.5 rounded-full overflow-hidden">
-                            <div id="bar-needs" class="bg-[#0A84FF] h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                            <div id="bar-needs" class="bg-[#003D73] h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                         </div>
                     </div>
                     <div class="space-y-1">
@@ -239,7 +239,7 @@
 
                     <!-- Tombol Pilih Tampilan Riwayat -->
                     <div class="grid grid-cols-3 gap-1.5 ios-inner-box p-1.5 rounded-2xl mb-4">
-                        <button type="button" id="tab-btn-keluar" onclick="gantiTabRiwayat('pengeluaran')" class="py-2 rounded-xl text-xs font-bold bg-[#0A84FF] text-white shadow-sm transition cursor-pointer">Pengeluaran</button>
+                        <button type="button" id="tab-btn-keluar" onclick="gantiTabRiwayat('pengeluaran')" class="py-2 rounded-xl text-xs font-bold bg-[#003D73] text-white shadow-sm transition cursor-pointer">Pengeluaran</button>
                         <button type="button" id="tab-btn-masuk" onclick="gantiTabRiwayat('pemasukan')" class="py-2 rounded-xl text-xs font-bold text-[var(--text-muted)] transition cursor-pointer">Pemasukan</button>
                         <button type="button" id="tab-btn-tabungan" onclick="gantiTabRiwayat('tabungan')" class="py-2 rounded-xl text-xs font-bold text-[var(--text-muted)] transition cursor-pointer">Tabungan</button>
                     </div>
@@ -264,7 +264,7 @@
         </div>
     </div>
 
-    <!-- Navigasi Bawah (Warna Biru Cerah #0A84FF Kontras & Sangat Rounded) -->
+    <!-- Navigasi Bawah (Warna Biru Navy Gelap #003463 & Sangat Rounded) -->
     <div class="fixed bottom-0 left-0 right-0 bottom-nav shadow-2xl z-50 px-6 py-3">
         <div class="max-w-md mx-auto grid grid-cols-4 gap-2 text-center">
             <button onclick="pilihMenuBCA('info')" class="p-2.5 rounded-2xl hover:bg-white/10 active:scale-95 transition flex flex-col items-center justify-center cursor-pointer">
@@ -299,7 +299,7 @@
         <form onsubmit="submitTransaksi(event)" class="flex flex-col gap-3">
             <div class="grid grid-cols-3 gap-1.5 ios-inner-box p-1.5 rounded-2xl">
                 <button type="button" id="btn-pemasukan" onclick="setTipe('pemasukan')" class="py-2 rounded-xl text-[11px] font-bold text-[var(--text-muted)] transition cursor-pointer">Masuk</button>
-                <button type="button" id="btn-pengeluaran" onclick="setTipe('pengeluaran')" class="py-2 rounded-xl text-[11px] font-bold bg-[#0A84FF] text-white shadow-md transition cursor-pointer">Keluar</button>
+                <button type="button" id="btn-pengeluaran" onclick="setTipe('pengeluaran')" class="py-2 rounded-xl text-[11px] font-bold bg-[#003D73] text-white shadow-md transition cursor-pointer">Keluar</button>
                 <button type="button" id="btn-tabungan" onclick="setTipe('tabungan')" class="py-2 rounded-xl text-[11px] font-bold text-[var(--text-muted)] transition cursor-pointer">Tabungan</button>
             </div>
             <div>
@@ -338,7 +338,7 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" id="btn-simpan" class="w-full bg-[#0A84FF] text-white font-bold py-3 rounded-2xl shadow-lg shadow-blue-500/30 hover:opacity-95 transition text-xs mt-1 cursor-pointer">SIMPAN</button>
+            <button type="submit" id="btn-simpan" class="w-full bg-[#003D73] text-white font-bold py-3 rounded-2xl shadow-lg shadow-black/30 hover:opacity-95 transition text-xs mt-1 cursor-pointer">SIMPAN</button>
         </form>
     </template>
 
@@ -537,7 +537,7 @@
             if (tipe === 'pemasukan') {
                 btnMasuk.className = "py-2 rounded-xl text-[11px] font-bold bg-[#34C759] text-white shadow-md transition cursor-pointer";
             } else if (tipe === 'pengeluaran') {
-                btnKeluar.className = "py-2 rounded-xl text-[11px] font-bold bg-[#0A84FF] text-white shadow-md transition cursor-pointer";
+                btnKeluar.className = "py-2 rounded-xl text-[11px] font-bold bg-[#003D73] text-white shadow-md transition cursor-pointer";
             } else if (tipe === 'tabungan') {
                 btnTabungan.className = "py-2 rounded-xl text-[11px] font-bold bg-[#FF9500] text-white shadow-md transition cursor-pointer";
             }
@@ -562,7 +562,7 @@
             listTabungan.classList.add('hidden');
 
             if (tab === 'pengeluaran') {
-                btnKeluar.className = "py-2 rounded-xl text-xs font-bold bg-[#0A84FF] text-white shadow-sm transition cursor-pointer";
+                btnKeluar.className = "py-2 rounded-xl text-xs font-bold bg-[#003D73] text-white shadow-sm transition cursor-pointer";
                 listKeluar.classList.remove('hidden');
             } else if (tab === 'pemasukan') {
                 btnMasuk.className = "py-2 rounded-xl text-xs font-bold bg-[#34C759] text-white shadow-sm transition cursor-pointer";
@@ -679,7 +679,7 @@
                     labels: Object.keys(dataKategori),
                     datasets: [{
                         data: Object.values(dataKategori),
-                        backgroundColor: ['#0A84FF', '#34C759', '#FF9500', '#FFCC00', '#FF3B30', '#5856D6', '#8E8E93'],
+                        backgroundColor: ['#003D73', '#34C759', '#FF9500', '#FFCC00', '#FF3B30', '#5856D6', '#8E8E93'],
                         borderWidth: 2,
                         borderColor: isDark ? '#1E1E22' : '#FFFFFF',
                         hoverOffset: 4
@@ -720,7 +720,7 @@
 
             document.getElementById('info-needs').innerText = `${formatRupiah(totalNeeds)} / ${formatRupiah(idealNeeds)}`;
             document.getElementById('bar-needs').style.width = `${pctNeeds}%`;
-            document.getElementById('bar-needs').className = totalNeeds > idealNeeds ? "bg-[#FF3B30] h-full rounded-full transition-all" : "bg-[#0A84FF] h-full rounded-full transition-all";
+            document.getElementById('bar-needs').className = totalNeeds > idealNeeds ? "bg-[#FF3B30] h-full rounded-full transition-all" : "bg-[#003D73] h-full rounded-full transition-all";
 
             document.getElementById('info-wants').innerText = `${formatRupiah(totalWants)} / ${formatRupiah(idealWants)}`;
             document.getElementById('bar-wants').style.width = `${pctWants}%`;
@@ -779,7 +779,7 @@
                                 </div>
                                 <div>
                                     <p class="font-bold text-xs">${t.keterangan}</p>
-                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • <span class="text-[#0A84FF] font-bold">${t.tanggal}</span></p>
+                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • <span class="text-[#003D73] font-bold">${t.tanggal}</span></p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
@@ -795,12 +795,12 @@
                         countKeluar++;
                         itemEl.innerHTML = `
                             <div class="flex items-center gap-3">
-                                <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-[#0A84FF]/15 text-[#0A84FF]">
+                                <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-[#003D73]/15 text-[#003D73]">
                                     <i class="fa-solid ${ikonKategori[t.kategori] || 'fa-circle'} text-xs"></i>
                                 </div>
                                 <div>
                                     <p class="font-bold text-xs">${t.keterangan}</p>
-                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • <span class="text-[#0A84FF] font-bold">${t.tanggal}</span></p>
+                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • <span class="text-[#003D73] font-bold">${t.tanggal}</span></p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
@@ -821,7 +821,7 @@
                                 </div>
                                 <div>
                                     <p class="font-bold text-xs">${t.keterangan}</p>
-                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • <span class="text-[#0A84FF] font-bold">${t.tanggal}</span></p>
+                                    <p class="text-[10px] text-[var(--text-muted)] font-medium">${t.kategori} • <span class="text-[#003D73] font-bold">${t.tanggal}</span></p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
