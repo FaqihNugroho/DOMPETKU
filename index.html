@@ -60,9 +60,9 @@
         }
 
         .ios-hero-card {
-            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            background: linear-gradient(135deg, #0066AE 0%, #004B87 100%);
             border-radius: 1.5rem;
-            box-shadow: 0 12px 30px rgba(0, 122, 255, 0.35);
+            box-shadow: 0 12px 30px rgba(0, 102, 174, 0.35);
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
@@ -99,14 +99,14 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-8" data-source-id="1">
 
         <!-- Header -->
-        <header class="flex justify-between items-center mb-8" data-source-id="1">
+        <header class="flex justify-between items-center mb-6" data-source-id="1">
             <div class="flex items-center gap-3" data-source-id="1">
                 <div class="w-10 h-10 rounded-2xl bg-[#007AFF] flex items-center justify-center text-white shadow-md shadow-blue-500/20 text-sm" data-source-id="1">
                     <i class="fa-solid fa-wallet" data-source-id="1"></i>
                 </div>
                 <div data-source-id="1">
                     <h1 class="text-base font-bold tracking-tight text-white" data-source-id="1">DOMPET KITA</h1>
-                    <p class="text-xs text-blue-100" data-source-id="1">Keuangan Bersama</p>
+                    <p class="text-xs text-blue-100" data-source-id="1">m-BCA Style Interface</p>
                 </div>
             </div>
             <div class="flex items-center gap-2" data-source-id="1">
@@ -120,6 +120,34 @@
                 </button>
             </div>
         </header>
+
+        <!-- Menu Navigasi Kotak Grid ala m-BCA -->
+        <div class="grid grid-cols-4 gap-3 mb-6">
+            <div onclick="pilihMenuBCA('info')" class="ios-card p-3 text-center cursor-pointer hover:scale-105 transition flex flex-col items-center justify-center">
+                <div class="w-9 h-9 rounded-xl bg-blue-500/15 text-[#007AFF] flex items-center justify-center mb-1.5 text-sm">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                </div>
+                <span class="text-[11px] font-bold text-[var(--text-main)]">m-Info</span>
+            </div>
+            <div onclick="pilihMenuBCA('transaksi')" class="ios-card p-3 text-center cursor-pointer hover:scale-105 transition flex flex-col items-center justify-center">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/15 text-[#34C759] flex items-center justify-center mb-1.5 text-sm">
+                    <i class="fa-solid fa-circle-plus"></i>
+                </div>
+                <span class="text-[11px] font-bold text-[var(--text-main)]">m-Input</span>
+            </div>
+            <div onclick="pilihMenuBCA('budget')" class="ios-card p-3 text-center cursor-pointer hover:scale-105 transition flex flex-col items-center justify-center">
+                <div class="w-9 h-9 rounded-xl bg-purple-500/15 text-[#5856D6] flex items-center justify-center mb-1.5 text-sm">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <span class="text-[11px] font-bold text-[var(--text-main)]">Budget 50%</span>
+            </div>
+            <div onclick="pilihMenuBCA('grafik')" class="ios-card p-3 text-center cursor-pointer hover:scale-105 transition flex flex-col items-center justify-center">
+                <div class="w-9 h-9 rounded-xl bg-amber-500/15 text-[#FF9500] flex items-center justify-center mb-1.5 text-sm">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <span class="text-[11px] font-bold text-[var(--text-main)]">m-Admin</span>
+            </div>
+        </div>
 
         <!-- Layout Utama -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" data-source-id="1">
@@ -149,7 +177,7 @@
                 </div>
 
                 <!-- Form Input -->
-                <section class="ios-card p-5" data-source-id="1">
+                <section id="section-form" class="ios-card p-5" data-source-id="1">
                     <h3 class="font-bold text-xs mb-3 flex items-center gap-2" data-source-id="1">
                         <i class="fa-solid fa-circle-plus text-[#007AFF]" data-source-id="1"></i> Catat Transaksi Baru
                     </h3>
@@ -157,7 +185,7 @@
                 </section>
 
                 <!-- Budgeting 50/30/20 -->
-                <section class="ios-card p-5 space-y-3.5" data-source-id="1">
+                <section id="section-budget" class="ios-card p-5 space-y-3.5" data-source-id="1">
                     <div class="flex justify-between items-center" data-source-id="1">
                         <h3 class="font-bold text-xs flex items-center gap-2" data-source-id="1">
                             <i class="fa-solid fa-chart-pie text-[#5856D6]" data-source-id="1"></i> Budgeting 50/30/20 (Bulan Ini)
@@ -191,7 +219,7 @@
             <!-- KOLOM KANAN -->
             <div class="lg:col-span-2 space-y-6" data-source-id="1">
                 <!-- Grafik -->
-                <section class="ios-card p-5" data-source-id="1">
+                <section id="section-grafik" class="ios-card p-5" data-source-id="1">
                     <h3 class="font-bold text-xs mb-3 flex items-center gap-2" data-source-id="1">
                         <i class="fa-solid fa-chart-line text-[#34C759]" data-source-id="1"></i> Analisis Pengeluaran Bulanan
                     </h3>
@@ -201,7 +229,7 @@
                 </section>
 
                 <!-- Riwayat & Filter Rekapan Bulanan -->
-                <section class="ios-card p-5" data-source-id="1">
+                <section id="section-riwayat" class="ios-card p-5" data-source-id="1">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4" data-source-id="1">
                         <h3 class="font-bold text-xs flex items-center gap-2" data-source-id="1">
                             <i class="fa-solid fa-clock-rotate-left text-[#FF9500]" data-source-id="1"></i> Rekapan & Riwayat
@@ -312,6 +340,23 @@
         const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const namaBulanList = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+        function pilihMenuBCA(menu) {
+            const elForm = document.getElementById('section-form');
+            const elBudget = document.getElementById('section-budget');
+            const elGrafik = document.getElementById('section-grafik');
+            const elRiwayat = document.getElementById('section-riwayat');
+
+            if (menu === 'info') {
+                elRiwayat.scrollIntoView({ behavior: 'smooth' });
+            } else if (menu === 'transaksi') {
+                elForm.scrollIntoView({ behavior: 'smooth' });
+            } else if (menu === 'budget') {
+                elBudget.scrollIntoView({ behavior: 'smooth' });
+            } else if (menu === 'grafik') {
+                elGrafik.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
 
         function initTheme() {
             const savedTheme = localStorage.getItem('dompetku_theme');
