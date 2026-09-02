@@ -93,30 +93,30 @@
         }
     </style>
 </head>
-<body class="pb-12" data-source-id="1">
+<body class="pb-12">
 
     <!-- Wrapper Utama -->
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-8" data-source-id="1">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-8">
 
         <!-- Header -->
-        <header class="flex justify-between items-center mb-6" data-source-id="1">
-            <div class="flex items-center gap-3" data-source-id="1">
-                <div class="w-10 h-10 rounded-2xl bg-[#007AFF] flex items-center justify-center text-white shadow-md shadow-blue-500/20 text-sm" data-source-id="1">
-                    <i class="fa-solid fa-wallet" data-source-id="1"></i>
+        <header class="flex justify-between items-center mb-6">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-[#007AFF] flex items-center justify-center text-white shadow-md shadow-blue-500/20 text-sm">
+                    <i class="fa-solid fa-wallet"></i>
                 </div>
-                <div data-source-id="1">
-                    <h1 class="text-base font-bold tracking-tight text-white" data-source-id="1">DOMPET KITA</h1>
-                    <p class="text-xs text-blue-100" data-source-id="1">m-BCA Style Interface</p>
+                <div>
+                    <h1 class="text-base font-bold tracking-tight text-white">DOMPET KITA</h1>
+                    <p class="text-xs text-blue-100">m-BCA Style Interface</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2" data-source-id="1">
+            <div class="flex items-center gap-2">
                 <!-- Status Koneksi Realtime -->
-                <span id="sync-status" class="text-[10px] px-2.5 py-1 rounded-full font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20 flex items-center gap-1.5" data-source-id="1">
-                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" data-source-id="1"></span> Menghubungkan...
+                <span id="sync-status" class="text-[10px] px-2.5 py-1 rounded-full font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Menghubungkan...
                 </span>
                 <!-- Tombol Toggle Tema -->
-                <button onclick="toggleDarkMode()" id="theme-toggle" class="w-10 h-10 rounded-2xl ios-card flex items-center justify-center text-sm text-[var(--text-main)] hover:opacity-80 transition cursor-pointer" title="Ubah Tema" data-source-id="1">
-                    <i id="theme-icon" class="fa-solid fa-moon" data-source-id="1"></i>
+                <button onclick="toggleDarkMode()" id="theme-toggle" class="w-10 h-10 rounded-2xl ios-card flex items-center justify-center text-sm text-[var(--text-main)] hover:opacity-80 transition cursor-pointer" title="Ubah Tema">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
                 </button>
             </div>
         </header>
@@ -150,95 +150,95 @@
         </div>
 
         <!-- Layout Utama -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" data-source-id="1">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
             <!-- KOLOM KIRI -->
-            <div class="space-y-6" data-source-id="1">
+            <div class="space-y-6">
                 <!-- Kartu Saldo -->
-                <div class="ios-hero-card p-6 text-white relative overflow-hidden" data-source-id="1">
-                    <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-white/10 rounded-full blur-2xl pointer-events-none" data-source-id="1"></div>
-                    <div class="mb-5 relative z-10" data-source-id="1">
-                        <div class="flex justify-between items-center" data-source-id="1">
-                            <p id="label-saldo-title" class="text-[11px] font-semibold uppercase tracking-wider text-blue-100" data-source-id="1">Saldo Bulan Ini</p>
-                            <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-full font-bold" data-source-id="1">IDR</span>
+                <div class="ios-hero-card p-6 text-white relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                    <div class="mb-5 relative z-10">
+                        <div class="flex justify-between items-center">
+                            <p id="label-saldo-title" class="text-[11px] font-semibold uppercase tracking-wider text-blue-100">Saldo Bulan Ini</p>
+                            <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-full font-bold">IDR</span>
                         </div>
-                        <h2 id="total-saldo" class="text-3xl font-extrabold mt-1 tracking-tight" data-source-id="1">Rp 0</h2>
+                        <h2 id="total-saldo" class="text-3xl font-extrabold mt-1 tracking-tight">Rp 0</h2>
                     </div>
-                    <div class="grid grid-cols-2 gap-2 pt-3 border-t border-white/20 relative z-10" data-source-id="1">
-                        <div class="bg-black/15 backdrop-blur-md p-2.5 rounded-xl" data-source-id="1">
-                            <span class="text-[10px] text-emerald-300 font-bold uppercase flex items-center gap-1" data-source-id="1"><i class="fa-solid fa-arrow-down" data-source-id="1"></i> Masuk</span>
-                            <p id="total-pemasukan" class="text-xs font-bold mt-1" data-source-id="1">Rp 0</p>
+                    <div class="grid grid-cols-2 gap-2 pt-3 border-t border-white/20 relative z-10">
+                        <div class="bg-black/15 backdrop-blur-md p-2.5 rounded-xl">
+                            <span class="text-[10px] text-emerald-300 font-bold uppercase flex items-center gap-1"><i class="fa-solid fa-arrow-down"></i> Masuk</span>
+                            <p id="total-pemasukan" class="text-xs font-bold mt-1">Rp 0</p>
                         </div>
-                        <div class="bg-black/15 backdrop-blur-md p-2.5 rounded-xl" data-source-id="1">
-                            <span class="text-[10px] text-rose-300 font-bold uppercase flex items-center gap-1" data-source-id="1"><i class="fa-solid fa-arrow-up" data-source-id="1"></i> Keluar</span>
-                            <p id="total-pengeluaran" class="text-xs font-bold mt-1" data-source-id="1">Rp 0</p>
+                        <div class="bg-black/15 backdrop-blur-md p-2.5 rounded-xl">
+                            <span class="text-[10px] text-rose-300 font-bold uppercase flex items-center gap-1"><i class="fa-solid fa-arrow-up"></i> Keluar</span>
+                            <p id="total-pengeluaran" class="text-xs font-bold mt-1">Rp 0</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Form Input -->
-                <section id="section-form" class="ios-card p-5" data-source-id="1">
-                    <h3 class="font-bold text-xs mb-3 flex items-center gap-2" data-source-id="1">
-                        <i class="fa-solid fa-circle-plus text-[#007AFF]" data-source-id="1"></i> Catat Transaksi Baru
+                <section id="section-form" class="ios-card p-5">
+                    <h3 class="font-bold text-xs mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-plus text-[#007AFF]"></i> Catat Transaksi Baru
                     </h3>
-                    <div id="form-container" data-source-id="1"></div>
+                    <div id="form-container"></div>
                 </section>
 
                 <!-- Budgeting 50/30/20 -->
-                <section id="section-budget" class="ios-card p-5 space-y-3.5" data-source-id="1">
-                    <div class="flex justify-between items-center" data-source-id="1">
-                        <h3 class="font-bold text-xs flex items-center gap-2" data-source-id="1">
-                            <i class="fa-solid fa-chart-pie text-[#5856D6]" data-source-id="1"></i> Budgeting 50/30/20 (Bulan Ini)
+                <section id="section-budget" class="ios-card p-5 space-y-3.5">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-[#5856D6]"></i> Budgeting 50/30/20 (Bulan Ini)
                         </h3>
                     </div>
-                    <div class="space-y-1" data-source-id="1">
-                        <div class="flex justify-between text-[11px] font-semibold" data-source-id="1">
-                            <span class="text-[var(--text-muted)]" data-source-id="1">50% Kebutuhan</span>
-                            <span id="info-needs" class="text-[#007AFF]" data-source-id="1">Rp 0 / Rp 0</span>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-[11px] font-semibold">
+                            <span class="text-[var(--text-muted)]">50% Kebutuhan</span>
+                            <span id="info-needs" class="text-[#007AFF]">Rp 0 / Rp 0</span>
                         </div>
-                        <div class="w-full ios-inner-box h-2 rounded-full overflow-hidden" data-source-id="1">
-                            <div id="bar-needs" class="bg-[#007AFF] h-full rounded-full transition-all duration-500" style="width: 0%" data-source-id="1"></div>
-                        </div>
-                    </div>
-                    <div class="space-y-1" data-source-id="1">
-                        <div class="flex justify-between text-[11px] font-semibold" data-source-id="1">
-                            <span class="text-[var(--text-muted)]" data-source-id="1">30% Keinginan</span>
-                            <span id="info-wants" class="text-[#5856D6]" data-source-id="1">Rp 0 / Rp 0</span>
-                        </div>
-                        <div class="w-full ios-inner-box h-2 rounded-full overflow-hidden" data-source-id="1">
-                            <div id="bar-wants" class="bg-[#5856D6] h-full rounded-full transition-all duration-500" style="width: 0%" data-source-id="1"></div>
+                        <div class="w-full ios-inner-box h-2 rounded-full overflow-hidden">
+                            <div id="bar-needs" class="bg-[#007AFF] h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                         </div>
                     </div>
-                    <div class="pt-2 border-t border-[var(--card-border)] flex justify-between items-center text-[11px] font-semibold" data-source-id="1">
-                        <span class="text-[var(--text-muted)]" data-source-id="1">20% Tabungan (Savings)</span>
-                        <span id="info-savings" class="text-[#34C759] font-bold" data-source-id="1">Rp 0</span>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-[11px] font-semibold">
+                            <span class="text-[var(--text-muted)]">30% Keinginan</span>
+                            <span id="info-wants" class="text-[#5856D6]">Rp 0 / Rp 0</span>
+                        </div>
+                        <div class="w-full ios-inner-box h-2 rounded-full overflow-hidden">
+                            <div id="bar-wants" class="bg-[#5856D6] h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-[var(--card-border)] flex justify-between items-center text-[11px] font-semibold">
+                        <span class="text-[var(--text-muted)]">20% Tabungan (Savings)</span>
+                        <span id="info-savings" class="text-[#34C759] font-bold">Rp 0</span>
                     </div>
                 </section>
             </div>
 
             <!-- KOLOM KANAN -->
-            <div class="lg:col-span-2 space-y-6" data-source-id="1">
+            <div class="lg:col-span-2 space-y-6">
                 <!-- Grafik -->
-                <section id="section-grafik" class="ios-card p-5" data-source-id="1">
-                    <h3 class="font-bold text-xs mb-3 flex items-center gap-2" data-source-id="1">
-                        <i class="fa-solid fa-chart-line text-[#34C759]" data-source-id="1"></i> Analisis Pengeluaran Bulanan
+                <section id="section-grafik" class="ios-card p-5">
+                    <h3 class="font-bold text-xs mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-[#34C759]"></i> Analisis Pengeluaran Bulanan
                     </h3>
-                    <div class="relative w-full h-52 sm:h-60 flex justify-center items-center" data-source-id="1">
-                        <canvas id="grafikKategori" data-source-id="1"></canvas>
+                    <div class="relative w-full h-52 sm:h-60 flex justify-center items-center">
+                        <canvas id="grafikKategori"></canvas>
                     </div>
                 </section>
 
                 <!-- Riwayat & Filter Rekapan Bulanan -->
-                <section id="section-riwayat" class="ios-card p-5" data-source-id="1">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4" data-source-id="1">
-                        <h3 class="font-bold text-xs flex items-center gap-2" data-source-id="1">
-                            <i class="fa-solid fa-clock-rotate-left text-[#FF9500]" data-source-id="1"></i> Rekapan & Riwayat
+                <section id="section-riwayat" class="ios-card p-5">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                        <h3 class="font-bold text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-[#FF9500]"></i> Rekapan & Riwayat
                         </h3>
                         
                         <!-- Pilihan Filter Bulan -->
-                        <div class="flex items-center gap-2 w-full sm:w-auto" data-source-id="1">
-                            <label class="text-[11px] font-bold text-[var(--text-muted)] whitespace-nowrap" data-source-id="1">Pilih Bulan:</label>
-                            <select id="filter-bulan" onchange="gantiFilterBulan()" class="ios-input px-3 py-1.5 text-xs font-bold cursor-pointer w-full sm:w-40" data-source-id="1">
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <label class="text-[11px] font-bold text-[var(--text-muted)] whitespace-nowrap">Pilih Bulan:</label>
+                            <select id="filter-bulan" onchange="gantiFilterBulan()" class="ios-input px-3 py-1.5 text-xs font-bold cursor-pointer w-full sm:w-40">
                             </select>
                         </div>
                     </div>
@@ -261,16 +261,16 @@
                     </div>
 
                     <!-- Daftar Riwayat Pengeluaran -->
-                    <div id="list-pengeluaran" class="space-y-2 max-h-[380px] overflow-y-auto pr-1" data-source-id="1">
-                        <p class="text-center text-[var(--text-muted)] text-xs py-8" data-source-id="1">Memuat data...</p>
+                    <div id="list-pengeluaran" class="space-y-2 max-h-[380px] overflow-y-auto pr-1">
+                        <p class="text-center text-[var(--text-muted)] text-xs py-8">Memuat data...</p>
                     </div>
 
                     <!-- Daftar Riwayat Pemasukan -->
-                    <div id="list-pemasukan" class="space-y-2 max-h-[380px] overflow-y-auto pr-1 hidden" data-source-id="1">
-                        <p class="text-center text-[var(--text-muted)] text-xs py-8" data-source-id="1">Memuat data...</p>
+                    <div id="list-pemasukan" class="space-y-2 max-h-[380px] overflow-y-auto pr-1 hidden">
+                        <p class="text-center text-[var(--text-muted)] text-xs py-8">Memuat data...</p>
                     </div>
 
-                    <!-- Daftar Riwayat Tabungan (Fitur Tambahan) -->
+                    <!-- Daftar Riwayat Tabungan -->
                     <div id="list-tabungan" class="space-y-2 max-h-[380px] overflow-y-auto pr-1 hidden">
                         <p class="text-center text-[var(--text-muted)] text-xs py-8">Memuat data...</p>
                     </div>
@@ -281,55 +281,55 @@
     </div>
 
     <!-- Template Form -->
-    <template id="template-form" data-source-id="1">
-        <form onsubmit="submitTransaksi(event)" class="flex flex-col gap-2.5" data-source-id="1">
+    <template id="template-form">
+        <form onsubmit="submitTransaksi(event)" class="flex flex-col gap-2.5">
             <div class="grid grid-cols-3 gap-1 ios-inner-box p-1 rounded-xl">
                 <button type="button" id="btn-pemasukan" onclick="setTipe('pemasukan')" class="py-1.5 rounded-lg text-[11px] font-bold text-[var(--text-muted)] transition cursor-pointer">Masuk</button>
                 <button type="button" id="btn-pengeluaran" onclick="setTipe('pengeluaran')" class="py-1.5 rounded-lg text-[11px] font-bold bg-[#007AFF] text-white shadow-sm transition cursor-pointer">Keluar</button>
                 <button type="button" id="btn-tabungan" onclick="setTipe('tabungan')" class="py-1.5 rounded-lg text-[11px] font-bold text-[var(--text-muted)] transition cursor-pointer">Tabungan</button>
             </div>
-            <div data-source-id="1">
-                <input type="text" id="keterangan" placeholder="Keterangan (Cth: Nabung Darurat / Ambil Tabungan)" required class="w-full px-3.5 py-2 ios-input text-xs font-medium" data-source-id="1">
+            <div>
+                <input type="text" id="keterangan" placeholder="Keterangan (Cth: Nabung Darurat / Ambil Tabungan)" required class="w-full px-3.5 py-2 ios-input text-xs font-medium">
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" data-source-id="1">
-                <div data-source-id="1">
-                    <input type="text" id="nominal" inputmode="numeric" placeholder="Nominal (Rp)" required class="w-full px-3.5 py-2 ios-input text-xs font-medium" data-source-id="1">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                    <input type="text" id="nominal" inputmode="numeric" placeholder="Nominal (Rp)" required class="w-full px-3.5 py-2 ios-input text-xs font-medium">
                 </div>
-                <div data-source-id="1">
-                    <select id="kategori" class="w-full px-3.5 py-2 ios-input text-xs font-medium cursor-pointer" data-source-id="1">
+                <div>
+                    <select id="kategori" class="w-full px-3.5 py-2 ios-input text-xs font-medium cursor-pointer">
                     </select>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-2" data-source-id="1">
-                <div data-source-id="1">
-                    <label class="block text-[10px] font-semibold text-[var(--text-muted)] mb-1" data-source-id="1">Tanggal:</label>
-                    <select id="pilih-tanggal" class="w-full px-3.5 py-2 ios-input text-xs font-medium cursor-pointer" data-source-id="1">
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block text-[10px] font-semibold text-[var(--text-muted)] mb-1">Tanggal:</label>
+                    <select id="pilih-tanggal" class="w-full px-3.5 py-2 ios-input text-xs font-medium cursor-pointer">
                     </select>
                 </div>
-                <div data-source-id="1">
-                    <label class="block text-[10px] font-semibold text-[var(--text-muted)] mb-1" data-source-id="1">Bulan:</label>
-                    <select id="pilih-bulan" class="w-full px-3.5 py-2 ios-input text-xs font-medium cursor-pointer" data-source-id="1">
-                        <option value="Januari" data-source-id="1">Januari</option>
-                        <option value="Februari" data-source-id="1">Februari</option>
-                        <option value="Maret" data-source-id="1">Maret</option>
-                        <option value="April" data-source-id="1">April</option>
-                        <option value="Mei" data-source-id="1">Mei</option>
-                        <option value="Juni" data-source-id="1">Juni</option>
-                        <option value="Juli" data-source-id="1">Juli</option>
-                        <option value="Agustus" data-source-id="1">Agustus</option>
-                        <option value="September" data-source-id="1">September</option>
-                        <option value="Oktober" data-source-id="1">Oktober</option>
-                        <option value="November" data-source-id="1">November</option>
-                        <option value="Desember" data-source-id="1">Desember</option>
+                <div>
+                    <label class="block text-[10px] font-semibold text-[var(--text-muted)] mb-1">Bulan:</label>
+                    <select id="pilih-bulan" class="w-full px-3.5 py-2 ios-input text-xs font-medium cursor-pointer">
+                        <option value="Januari">Januari</option>
+                        <option value="Februari">Februari</option>
+                        <option value="Maret">Maret</option>
+                        <option value="April">April</option>
+                        <option value="Mei">Mei</option>
+                        <option value="Juni">Juni</option>
+                        <option value="Juli">Juli</option>
+                        <option value="Agustus">Agustus</option>
+                        <option value="September">September</option>
+                        <option value="Oktober">Oktober</option>
+                        <option value="November">November</option>
+                        <option value="Desember">Desember</option>
                     </select>
                 </div>
             </div>
-            <button type="submit" id="btn-simpan" class="w-full bg-[#007AFF] text-white font-bold py-2.5 rounded-xl shadow-md shadow-blue-500/20 hover:opacity-90 transition text-xs mt-1 cursor-pointer" data-source-id="1">SIMPAN</button>
+            <button type="submit" id="btn-simpan" class="w-full bg-[#007AFF] text-white font-bold py-2.5 rounded-xl shadow-md shadow-blue-500/20 hover:opacity-90 transition text-xs mt-1 cursor-pointer">SIMPAN</button>
         </form>
     </template>
 
     <!-- Skrip Supabase & Logika Aplikasi -->
-    <script data-source-id="1">
+    <script>
         // ==========================================
         // KONFIGURASI SUPABASE ANDA
         // ==========================================
@@ -348,13 +348,17 @@
             const elRiwayat = document.getElementById('section-riwayat');
 
             if (menu === 'info') {
-                elRiwayat.scrollIntoView({ behavior: 'smooth' });
+                elRiwayat.scrollIntoView({ behavior: 'smooth', block: 'start' });
             } else if (menu === 'transaksi') {
-                elForm.scrollIntoView({ behavior: 'smooth' });
+                elForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setTimeout(() => {
+                    const inputKet = document.getElementById('keterangan');
+                    if (inputKet) inputKet.focus();
+                }, 300);
             } else if (menu === 'budget') {
-                elBudget.scrollIntoView({ behavior: 'smooth' });
+                elBudget.scrollIntoView({ behavior: 'smooth', block: 'start' });
             } else if (menu === 'grafik') {
-                elGrafik.scrollIntoView({ behavior: 'smooth' });
+                elGrafik.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
@@ -464,7 +468,6 @@
             });
         }
 
-        // Pemetaan Icon Kategori
         const ikonKategori = {
             'Gaji': 'fa-sack-dollar',
             'Makanan/Minuman': 'fa-utensils',
