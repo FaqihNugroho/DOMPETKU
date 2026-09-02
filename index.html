@@ -342,17 +342,17 @@
             const elRiwayat = document.getElementById('section-riwayat');
 
             if (menu === 'info') {
-                elRiwayat.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                elRiwayat.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else if (menu === 'transaksi') {
-                elForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                elForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 setTimeout(() => {
                     const inputKet = document.getElementById('keterangan');
                     if (inputKet) inputKet.focus();
                 }, 300);
             } else if (menu === 'budget') {
-                elBudget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                elBudget.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else if (menu === 'grafik') {
-                elGrafik.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                elGrafik.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
 
